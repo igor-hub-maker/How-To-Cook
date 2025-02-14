@@ -1,0 +1,23 @@
+mixin BodyParameters {
+  static const String idMeal = 'idMeal';
+  static const String strMeal = 'strMeal';
+  static const String strCategory = 'strCategory';
+  static const String strTags = 'strTags';
+  static const String strInstructions = 'strInstructions';
+  static const String strYoutube = 'strYoutube';
+  static const String strIngredient = 'strIngredient';
+  static const String strMeasure = 'strMeasure';
+  static const String strSource = 'strSource';
+  static const String strMealThumb = 'strMealThumb';
+  static const String name = 'name';
+  static const String measure = 'strMealThumb';
+  static const String meals = 'meals';
+  static const String categories = 'categories';
+  static const String strArea = 'strArea';
+  static const String idCategory = 'idCategory';
+  static const String strCategoryThumb = 'strCategoryThumb';
+  static const String strCategoryDescription = 'strCategoryDescription';
+  static const String idIngredient = 'idIngredient';
+  static const String strDescription = 'strDescription';
+  static const String strType = 'strType';
+}

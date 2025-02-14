@@ -1,0 +1,13 @@
+{
+  "MainPageTitle": "Was werden wir heute kochen?",
+  "Ingredients": {
+    "zero": "{} Zutaten",
+    "one": "{} Zutat",
+    "two": "{} Zutaten",
+    "few": "{} Zutaten",
+    "many": "{} Zutaten",
+    "other": "{} Zutaten"
+  },
+  "YourDayRecipe": "Dein Rezept des Tages",
+  "YourDayCategory": "Dein Kategorie des Tages"
+}
