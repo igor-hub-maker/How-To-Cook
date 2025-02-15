@@ -6,10 +6,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:how_to_cook/common/app_colors.dart';
 import 'package:how_to_cook/common/fonts.dart';
 import 'package:how_to_cook/generated/locale_keys.g.dart';
-import 'package:how_to_cook/main.dart';
 import 'package:how_to_cook/widgets/pages/home/home_cubit.dart';
 import 'package:how_to_cook/widgets/pages/home/home_state.dart';
 import 'package:how_to_cook/widgets/pages/home/items/item_view.dart';
+import 'package:how_to_cook/widgets/pages/meal_details/meal_details_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -83,7 +83,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             final locale = context.supportedLocales[index];
                             return ListTile(
                               title: Text(locale.toLanguageTag()),
-                              trailing: locale == context.locale ? const Icon(Icons.check) : null,
+                              trailing: locale == context.locale
+                                  ? const Icon(Icons.check)
+                                  : null,
                               onTap: () {
                                 context.setLocale(locale);
                                 Navigator.pop(context);
@@ -100,12 +102,22 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
           const SizedBox(height: 10),
-          ItemView(
-            name: screenCubit.meal.name,
-            count: screenCubit.meal.ingredients.length,
-            tags: screenCubit.meal.tags,
-            imageUrl: screenCubit.meal.imageUrl,
-            country: screenCubit.meal.country,
+          GestureDetector(
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => MealDetailsScreen(
+                  meal: screenCubit.meal,
+                ),
+              ),
+            ),
+            child: ItemView(
+              name: screenCubit.meal.name,
+              count: screenCubit.meal.ingredients.length,
+              tags: screenCubit.meal.tags,
+              imageUrl: screenCubit.meal.imageUrl,
+              country: screenCubit.meal.country,
+            ),
           ),
           const SizedBox(height: 20),
           ItemView(
