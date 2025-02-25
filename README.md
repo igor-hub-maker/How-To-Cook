@@ -10,7 +10,7 @@
 * Flutter
 * Bloc - Cubit
 * Google Translate
-* api: ([Meal DB](https://www.themealdb.com))
+* api: [Meal DB](https://www.themealdb.com)
 ## TODO:  Опублікований продукт
 Інсталяційний пакет створеної гри можна завантажити з магазину
 [intch.io](http://itch.io)
