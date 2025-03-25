@@ -3,12 +3,13 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:how_to_cook/common/app_colors.dart';
+import 'package:how_to_cook/extensions/context_extension.dart';
 import 'package:how_to_cook/models/meal.dart';
 import 'package:how_to_cook/widgets/pages/meal_details/meal_details_cubit.dart';
 import 'package:world_flags/world_flags.dart';
-
-import '../../../common/fonts.dart';
-import 'meal_details_state.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:how_to_cook/common/fonts.dart';
+import 'package:how_to_cook/widgets/pages/meal_details/meal_details_state.dart';
 
 class MealDetailsScreen extends StatefulWidget {
   const MealDetailsScreen({Key? key, required this.meal}) : super(key: key);
@@ -19,8 +20,7 @@ class MealDetailsScreen extends StatefulWidget {
   _MealDetailsScreenState createState() => _MealDetailsScreenState();
 }
 
-class _MealDetailsScreenState extends State<MealDetailsScreen>
-    with TickerProviderStateMixin {
+class _MealDetailsScreenState extends State<MealDetailsScreen> with TickerProviderStateMixin {
   final screenCubit = MealDetailsCubit();
 
   late final WorldCountry? countryData;
@@ -46,8 +46,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen>
       },
       builder: (BuildContext context, MealDetailsState state) {
         if (state.isLoading) {
-          return const Scaffold(
-              body: Center(child: CircularProgressIndicator()));
+          return const Scaffold(body: Center(child: CircularProgressIndicator()));
         }
 
         return Scaffold(
@@ -67,7 +66,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen>
       child: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(
-            vertical: 50,
+            vertical: 10,
             horizontal: 20,
           ),
           child: Container(
@@ -105,7 +104,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen>
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  padding: const EdgeInsets.all(10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -119,10 +118,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen>
                                 fontFamily: Fonts.Comfortaa,
                                 fontSize: 24,
                                 fontWeight: FontWeight.w500,
-                                color: Theme.of(context).brightness ==
-                                        Brightness.light
-                                    ? Colors.black
-                                    : Colors.white,
+                                color: context.isDarkMode ? Colors.white : Colors.black,
                               ),
                               children: [
                                 if (countryData != null)
@@ -137,8 +133,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen>
                                       ),
                                     ),
                                   ),
-                                if (countryData != null)
-                                  const TextSpan(text: " · "),
+                                if (countryData != null) const TextSpan(text: " · "),
                                 TextSpan(
                                   text: widget.meal.name,
                                 ),
@@ -158,10 +153,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen>
                                 fontFamily: Fonts.Comfortaa,
                                 fontSize: 18,
                                 fontWeight: FontWeight.w500,
-                                color: Theme.of(context).brightness ==
-                                        Brightness.light
-                                    ? Colors.black
-                                    : Colors.white,
+                                color: context.isDarkMode ? Colors.white : Colors.black,
                               ),
                             ),
                           ),
@@ -189,10 +181,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen>
                                 fontFamily: Fonts.Comfortaa,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w700,
-                                color: Theme.of(context).brightness ==
-                                        Brightness.light
-                                    ? Colors.white
-                                    : Colors.black,
+                                color: context.isDarkMode ? Colors.black : Colors.white,
                               ),
                             ),
                           ),
@@ -201,7 +190,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen>
                       const SizedBox(height: 16),
                       Text(
                         "${widget.meal.ingredients.length} data",
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontFamily: Fonts.Comfortaa,
                           fontSize: 18,
                           fontWeight: FontWeight.w700,
@@ -214,29 +203,60 @@ class _MealDetailsScreenState extends State<MealDetailsScreen>
                         children: List.generate(
                           widget.meal.ingredients.length,
                           (index) => Container(
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                               horizontal: 5,
                               vertical: 2,
                             ),
                             decoration: BoxDecoration(
-                              color: AppColors.colorScheme.primary,
+                              color: context.isDarkMode ? Colors.grey : Colors.white,
                               borderRadius: BorderRadius.circular(5),
                             ),
-                            child: Text(
-                              widget.meal.ingredients[index].name,
-                              style: TextStyle(
-                                fontFamily: Fonts.Comfortaa,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w700,
-                                color: Theme.of(context).brightness ==
-                                        Brightness.light
-                                    ? Colors.white
-                                    : Colors.black,
-                              ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  widget.meal.ingredients[index].name,
+                                  style: TextStyle(
+                                    fontFamily: Fonts.Comfortaa,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w700,
+                                    color: context.isDarkMode ? Colors.white : Colors.black,
+                                  ),
+                                ),
+                                Text(
+                                  widget.meal.ingredients[index].measure,
+                                  style: TextStyle(
+                                    fontFamily: Fonts.Comfortaa,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w700,
+                                    color: context.isDarkMode ? Colors.white : Colors.black,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
                       ),
+                      const SizedBox(height: 16),
+                      if (widget.meal.youtubeUrl != null) ...[
+                        FilledButton.icon(
+                          onPressed: () {
+                            launchUrl(Uri.parse(widget.meal.youtubeUrl!));
+                          },
+                          label: const Text("Watch video"),
+                          icon: const Icon(Icons.play_arrow),
+                        ),
+                        const SizedBox(height: 16),
+                      ],
+                      Text(
+                        widget.meal.instructions,
+                        style: TextStyle(
+                          fontFamily: Fonts.Comfortaa,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          color: context.isDarkMode ? Colors.white : Colors.black,
+                        ),
+                      )
                     ],
                   ),
                 ),

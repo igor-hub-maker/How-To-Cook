@@ -12,11 +12,13 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.6
+  focus_detector: ^2.0.1
   http: ^1.2.2
   injector: ^4.0.0
   provider: ^6.1.2
   shared_preferences: ^2.3.4
   translator: ^1.0.3+1
+  url_launcher: ^6.3.1
   world_flags: ^1.1.1
 
 dev_dependencies:
