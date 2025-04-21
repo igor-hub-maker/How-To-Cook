@@ -109,12 +109,12 @@ class _HomeScreenState extends State<HomeScreen> {
               context,
               MaterialPageRoute(
                 builder: (_) => MealDetailsScreen(
-                  meal: screenCubit.meal,
+                  meal: state.meal!,
                 ),
               ),
             ),
             child: MealItemView(
-              meal: screenCubit.meal,
+              meal: state.meal!,
             ),
           ),
           const SizedBox(height: 20),
@@ -123,15 +123,15 @@ class _HomeScreenState extends State<HomeScreen> {
               context,
               MaterialPageRoute(
                 builder: (_) => FilteredMealsScreen(
-                  filter: screenCubit.category.originalName,
+                  filter: state.category!.originalName,
                   mealFilteringType: MealFilteringType.category,
-                  name: screenCubit.category.name,
-                  description: screenCubit.category.description,
+                  name: state.category!.name,
+                  description: state.category!.description,
                 ),
               ),
             ),
             child: CategoryItemView(
-              category: screenCubit.category,
+              category: state.category!,
             ),
           ),
         ],

@@ -48,4 +48,22 @@ class Meal extends MealShort {
           imageUrl: json[BodyParameters.strMealThumb],
           country: json[BodyParameters.strArea],
         );
+
+  Map<String, dynamic> toJson() {
+    return {
+      BodyParameters.idMeal: id,
+      BodyParameters.strMeal: name,
+      BodyParameters.strCategory: category,
+      BodyParameters.strTags: tags?.join(','),
+      BodyParameters.strInstructions: instructions,
+      BodyParameters.strYoutube: youtubeUrl,
+      BodyParameters.strSource: source,
+      BodyParameters.strMealThumb: imageUrl,
+      BodyParameters.strArea: country,
+      for (int i = 0; i < ingredients.length; i++) ...{
+        '${BodyParameters.strIngredient}${i + 1}': ingredients[i].name,
+        '${BodyParameters.strMeasure}${i + 1}': ingredients[i].measure,
+      },
+    };
+  }
 }

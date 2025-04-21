@@ -24,4 +24,14 @@ class Category {
       originalName: json[BodyParameters.strCategoryOriginal],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      BodyParameters.idCategory: id,
+      BodyParameters.strCategory: name,
+      BodyParameters.strCategoryThumb: imageUrl,
+      BodyParameters.strCategoryDescription: description,
+      BodyParameters.strCategoryOriginal: originalName,
+    };
+  }
 }
