@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:how_to_cook/common/app_colors.dart';
+import 'package:how_to_cook/common/enums/meal_filtering_type.dart';
 import 'package:how_to_cook/common/fonts.dart';
+import 'package:how_to_cook/widgets/pages/filtered_meals/filtered_meals_screen.dart';
 import 'package:how_to_cook/widgets/pages/search/items/list_item_component.dart';
 import 'package:how_to_cook/widgets/pages/search/search_cubit.dart';
 import 'package:how_to_cook/widgets/pages/search/search_state.dart';
@@ -102,14 +104,41 @@ class _SearchScreenState extends State<SearchScreen> with TickerProviderStateMix
     return TabBarView(controller: tabController, children: [
       ListView.builder(
         itemCount: state.categories?.length ?? 0,
-        itemBuilder: (context, index) => ListItemComponent(
-          title: state.categories![index].name,
-          description: state.categories![index].description,
+        itemBuilder: (context, index) => GestureDetector(
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => FilteredMealsScreen(
+                mealFilteringType: MealFilteringType.category,
+                filter: state.categories![index].originalName,
+                name: state.categories![index].name,
+                description: state.categories![index].description,
+              ),
+            ),
+          ),
+          child: ListItemComponent(
+            title: state.categories![index].name,
+            description: state.categories![index].description,
+          ),
         ),
       ),
       ListView.builder(
         itemCount: state.areas?.length ?? 0,
-        itemBuilder: (context, index) => ListItemComponent(title: state.areas![index]),
+        itemBuilder: (context, index) => GestureDetector(
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => FilteredMealsScreen(
+                mealFilteringType: MealFilteringType.area,
+                filter: state.areas![index].name,
+                name: state.areas![index].localizedName,
+              ),
+            ),
+          ),
+          child: ListItemComponent(
+            title: state.areas![index].localizedName,
+          ),
+        ),
       )
     ]);
   }

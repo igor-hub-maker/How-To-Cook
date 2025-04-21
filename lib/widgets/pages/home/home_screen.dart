@@ -4,11 +4,15 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:how_to_cook/common/app_colors.dart';
+import 'package:how_to_cook/common/enums/meal_filtering_type.dart';
 import 'package:how_to_cook/common/fonts.dart';
 import 'package:how_to_cook/generated/locale_keys.g.dart';
+import 'package:how_to_cook/widgets/pages/filtered_meals/filtered_meals_cubit.dart';
+import 'package:how_to_cook/widgets/pages/filtered_meals/filtered_meals_screen.dart';
 import 'package:how_to_cook/widgets/pages/home/home_cubit.dart';
 import 'package:how_to_cook/widgets/pages/home/home_state.dart';
-import 'package:how_to_cook/widgets/pages/home/items/item_view.dart';
+import 'package:how_to_cook/widgets/views/%20category_item_view.dart';
+import 'package:how_to_cook/widgets/views/meal_item_view.dart';
 import 'package:how_to_cook/widgets/pages/meal_details/meal_details_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -109,18 +113,26 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-            child: ItemView(
-              name: screenCubit.meal.name,
-              count: screenCubit.meal.ingredients.length,
-              tags: screenCubit.meal.tags,
-              imageUrl: screenCubit.meal.imageUrl,
-              country: screenCubit.meal.country,
+            child: MealItemView(
+              meal: screenCubit.meal,
             ),
           ),
           const SizedBox(height: 20),
-          ItemView(
-            name: screenCubit.category.name,
-            imageUrl: screenCubit.category.imageUrl,
+          GestureDetector(
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => FilteredMealsScreen(
+                  filter: screenCubit.category.originalName,
+                  mealFilteringType: MealFilteringType.category,
+                  name: screenCubit.category.name,
+                  description: screenCubit.category.description,
+                ),
+              ),
+            ),
+            child: CategoryItemView(
+              category: screenCubit.category,
+            ),
           ),
         ],
       ),

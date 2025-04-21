@@ -3,33 +3,33 @@ import 'package:flutter/material.dart';
 import 'package:how_to_cook/common/app_colors.dart';
 import 'package:how_to_cook/common/fonts.dart';
 import 'package:how_to_cook/generated/locale_keys.g.dart';
+import 'package:how_to_cook/models/meal.dart';
+import 'package:how_to_cook/models/meal_short.dart';
 import 'package:world_flags/world_flags.dart';
 
-class ItemView extends StatelessWidget {
-  const ItemView({
+class MealItemView extends StatelessWidget {
+  const MealItemView({
     super.key,
-    required this.name,
-    this.count,
-    this.tags,
-    required this.imageUrl,
-    this.country,
+    required this.meal,
   });
 
-  final String name;
-  final int? count;
-  final List<String>? tags;
-  final String imageUrl;
-  final String? country;
+  final MealShort meal;
 
   @override
   Widget build(BuildContext context) {
-    final countryData =
-        WorldCountry.list.where((e) => e.demonyms.any((ee) => ee.male == country)).firstOrNull;
+    Meal? mealDetailed = meal is Meal ? meal as Meal : null;
+
+    final countryData = mealDetailed != null
+        ? WorldCountry.list
+            .where((e) => e.demonyms.any((ee) => ee.male == mealDetailed.country))
+            .firstOrNull
+        : null;
+
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         image: DecorationImage(
-          image: NetworkImage(imageUrl),
+          image: NetworkImage(meal.imageUrl),
           fit: BoxFit.cover,
         ),
         border: Border.all(
@@ -81,7 +81,7 @@ class ItemView extends StatelessWidget {
                         ),
                       if (countryData != null) const TextSpan(text: " · "),
                       TextSpan(
-                        text: name,
+                        text: meal.name,
                       ),
                     ],
                   )),
@@ -89,11 +89,11 @@ class ItemView extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 10),
-            if (count != null)
+            if (mealDetailed != null)
               Row(
                 children: [
                   Text(
-                    plural(LocaleKeys.Ingredients, count!),
+                    plural(LocaleKeys.Ingredients, mealDetailed.ingredients.length),
                     style: const TextStyle(
                       fontFamily: Fonts.Comfortaa,
                       fontSize: 16,
@@ -103,13 +103,13 @@ class ItemView extends StatelessWidget {
                   ),
                 ],
               ),
-            if (tags != null) ...[
+            if (mealDetailed?.tags != null) ...[
               const SizedBox(height: 10),
               Wrap(
                 spacing: 10,
                 runSpacing: 10,
                 children: List.generate(
-                  tags?.length ?? 0,
+                  mealDetailed!.tags?.length ?? 0,
                   (index) => Container(
                     padding: const EdgeInsets.all(5),
                     decoration: BoxDecoration(
@@ -117,7 +117,7 @@ class ItemView extends StatelessWidget {
                       borderRadius: BorderRadius.circular(5),
                     ),
                     child: Text(
-                      tags![index],
+                      mealDetailed.tags![index],
                       style: const TextStyle(
                         fontFamily: Fonts.Comfortaa,
                         fontSize: 14,

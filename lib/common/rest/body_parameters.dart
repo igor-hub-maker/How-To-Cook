@@ -2,6 +2,7 @@ mixin BodyParameters {
   static const String idMeal = 'idMeal';
   static const String strMeal = 'strMeal';
   static const String strCategory = 'strCategory';
+  static const String strCategoryOriginal = 'strCategoryOriginal';
   static const String strTags = 'strTags';
   static const String strInstructions = 'strInstructions';
   static const String strYoutube = 'strYoutube';
