@@ -5,12 +5,14 @@ class Category {
   String name;
   String imageUrl;
   String description;
+  String originalName;
 
   Category({
     required this.id,
     required this.name,
     required this.imageUrl,
     required this.description,
+    required this.originalName,
   });
 
   factory Category.fromJson(Map<String, dynamic> json) {
@@ -19,6 +21,7 @@ class Category {
       name: json[BodyParameters.strCategory],
       imageUrl: json[BodyParameters.strCategoryThumb],
       description: json[BodyParameters.strCategoryDescription],
+      originalName: json[BodyParameters.strCategoryOriginal],
     );
   }
 }
