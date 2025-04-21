@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:how_to_cook/main.dart';
 import 'package:how_to_cook/managers/meal/meal_manager.dart';
 import 'package:how_to_cook/models/category.dart';
 import 'package:how_to_cook/models/meal.dart';

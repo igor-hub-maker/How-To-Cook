@@ -4,6 +4,7 @@ import 'package:how_to_cook/extensions/context_extension.dart';
 import 'package:how_to_cook/models/tab.dart';
 import 'package:how_to_cook/widgets/pages/home/home_screen.dart';
 import 'package:how_to_cook/widgets/pages/search/search_screen.dart';
+import 'package:how_to_cook/widgets/views/animated_indexed_stack.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -32,7 +33,10 @@ class _MainPageState extends State<MainPage> {
             width: 3,
           ),
         ),
-        child: tabs[selectedTabIndex].widget,
+        child: AnimatedIndexedStack(
+          index: selectedTabIndex,
+          children: tabs.map((e) => e.widget).toList(),
+        ),
       ),
       bottomNavigationBar: Container(
         padding: EdgeInsets.only(bottom: context.bottomSaveArea),

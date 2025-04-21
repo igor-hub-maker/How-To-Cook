@@ -1,7 +1,9 @@
 import 'dart:developer';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:focus_detector/focus_detector.dart';
 import 'package:how_to_cook/common/app_colors.dart';
 import 'package:how_to_cook/common/fonts.dart';
 import 'package:how_to_cook/widgets/pages/search/items/list_item_component.dart';
@@ -9,7 +11,7 @@ import 'package:how_to_cook/widgets/pages/search/search_cubit.dart';
 import 'package:how_to_cook/widgets/pages/search/search_state.dart';
 
 class SearchScreen extends StatefulWidget {
-  const SearchScreen({Key? key}) : super(key: key);
+  const SearchScreen({super.key});
 
   @override
   _SearchScreenState createState() => _SearchScreenState();
@@ -18,33 +20,44 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> with TickerProviderStateMixin {
   final screenCubit = SearchCubit();
 
-  late final tabController = TabController(length: 3, vsync: this);
+  late final tabController = TabController(length: 2, vsync: this);
+
+  late String currentLocale = context.locale.toString();
 
   @override
   void initState() {
-    screenCubit.loadInitialData();
+    screenCubit.loadInitialData(context);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<SearchCubit, SearchState>(
-      bloc: screenCubit,
-      listener: (BuildContext context, SearchState state) {
-        if (state.error != null) {
-          log(state.error!);
+    return FocusDetector(
+      onFocusGained: () {
+        final newLocale = context.locale.toString();
+        if (currentLocale == newLocale) {
+          return;
         }
+        log('SearchScreen onFocusGained');
       },
-      builder: (BuildContext context, SearchState state) {
-        if (state.isLoading) {
-          return const Scaffold(body: Center(child: CircularProgressIndicator()));
-        }
+      child: BlocConsumer<SearchCubit, SearchState>(
+        bloc: screenCubit,
+        listener: (BuildContext context, SearchState state) {
+          if (state.error != null) {
+            log(state.error!);
+          }
+        },
+        builder: (BuildContext context, SearchState state) {
+          if (state.isLoading) {
+            return const Scaffold(body: Center(child: CircularProgressIndicator()));
+          }
 
-        return Scaffold(
-          body: buildBody(state),
-          appBar: buidAppBar(state),
-        );
-      },
+          return Scaffold(
+            body: buildBody(state),
+            appBar: buidAppBar(state),
+          );
+        },
+      ),
     );
   }
 
@@ -55,7 +68,7 @@ class _SearchScreenState extends State<SearchScreen> with TickerProviderStateMix
         size: 30,
         color: AppColors.colorScheme.onSecondary,
       ),
-      title: Text("Пошук"),
+      title: const Text("Пошук"),
       titleTextStyle: TextStyle(
         fontFamily: Fonts.Comfortaa,
         fontSize: 32,
@@ -73,10 +86,7 @@ class _SearchScreenState extends State<SearchScreen> with TickerProviderStateMix
       ],
       bottom: TabBar(
         controller: tabController,
-        tabs: [
-          Tab(
-            text: "Ingredient",
-          ),
+        tabs: const [
           Tab(
             text: "Category",
           ),
@@ -90,14 +100,6 @@ class _SearchScreenState extends State<SearchScreen> with TickerProviderStateMix
 
   Widget buildBody(SearchState state) {
     return TabBarView(controller: tabController, children: [
-      ListView.builder(
-        itemCount: state.ingredients?.length ?? 0,
-        itemBuilder: (context, index) => ListItemComponent(
-          title: state.ingredients![index].name,
-          description: state.ingredients![index].description,
-          type: state.ingredients![index].type,
-        ),
-      ),
       ListView.builder(
         itemCount: state.categories?.length ?? 0,
         itemBuilder: (context, index) => ListItemComponent(

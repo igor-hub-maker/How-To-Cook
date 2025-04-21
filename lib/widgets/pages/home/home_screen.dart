@@ -74,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
-                      title: Text('Settings'),
+                      title: const Text('Settings'),
                       content: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: List.generate(
@@ -83,9 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             final locale = context.supportedLocales[index];
                             return ListTile(
                               title: Text(locale.toLanguageTag()),
-                              trailing: locale == context.locale
-                                  ? const Icon(Icons.check)
-                                  : null,
+                              trailing: locale == context.locale ? const Icon(Icons.check) : null,
                               onTap: () {
                                 context.setLocale(locale);
                                 Navigator.pop(context);

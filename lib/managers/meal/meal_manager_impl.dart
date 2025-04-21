@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:how_to_cook/common/locale_constants.dart';
 import 'package:how_to_cook/common/rest/api_constants.dart';
 import 'package:how_to_cook/common/rest/body_parameters.dart';
 import 'package:how_to_cook/managers/meal/meal_manager.dart';
@@ -11,8 +12,7 @@ import 'package:injector/injector.dart';
 import 'package:translator/translator.dart';
 
 class MealManagerImpl implements MealManager {
-  late final MealDbService _mealDbService =
-      Injector.appInstance.get<MealDbService>();
+  late final MealDbService _mealDbService = Injector.appInstance.get<MealDbService>();
 
   @override
   Future<Meal> getRandomMeal([String? locale]) async {
@@ -38,18 +38,14 @@ class MealManagerImpl implements MealManager {
     );
 
     futures.add(
-      translator
-          .translate(mealJson[BodyParameters.strInstructions], to: locale)
-          .then(
+      translator.translate(mealJson[BodyParameters.strInstructions], to: locale).then(
             (result) => mealJson[BodyParameters.strInstructions] = result.text,
           ),
     );
 
     if (mealJson[BodyParameters.strArea] != null) {
       futures.add(
-        translator
-            .translate(mealJson[BodyParameters.strCategory], to: locale)
-            .then(
+        translator.translate(mealJson[BodyParameters.strCategory], to: locale).then(
               (result) => mealJson[BodyParameters.strCategory] = result.text,
             ),
       );
@@ -75,15 +71,13 @@ class MealManagerImpl implements MealManager {
 
   @override
   Future<List<Category>> getAllCategories([String? locale]) async {
-    final json =
-        await _mealDbService.getRequestByPath(ApiConstants.allCategories);
+    final json = await _mealDbService.getRequestByPath(ApiConstants.allCategories);
     final categoriesJson = List.from(json[BodyParameters.categories]);
 
     final categories = List<Category>.empty(growable: true);
     for (final categoryJson in categoriesJson) {
       if (locale != null) {
-        categories.add(
-            Category.fromJson(await translateCategory(categoryJson, locale)));
+        categories.add(Category.fromJson(await translateCategory(categoryJson, locale)));
       } else {
         categories.add(Category.fromJson(categoryJson));
       }
@@ -100,32 +94,52 @@ class MealManagerImpl implements MealManager {
     ))
         .text;
 
-    categoryJson[BodyParameters.strCategoryDescription] =
-        (await translator.translate(
+    categoryJson[BodyParameters.strCategoryDescription] = (await translator.translate(
       categoryJson[BodyParameters.strCategoryDescription],
       to: locale,
     ))
-            .text;
+        .text;
 
     return categoryJson;
   }
 
   @override
   Future<List<String>> getAllAreas([String? locale]) async {
-    final json =
-        await _mealDbService.getRequestByPath(ApiConstants.list, {"a": "list"});
-    final areas = List.from(json[BodyParameters.meals])
-        .map(
-          (json) => json[BodyParameters.strArea] as String,
-        )
-        .toList();
+    final translator = GoogleTranslator();
+
+    final json = await _mealDbService.getRequestByPath(ApiConstants.list, {"a": "list"});
+    final areas = List<String>.empty(growable: true);
+    if (locale != null && locale != LocaleConstants.en) {
+      final areasFutures = List.from(json[BodyParameters.meals]).map((json) async {
+        final translation = await translator.translate(
+          json[BodyParameters.strArea],
+          to: locale,
+        );
+
+        if (locale == LocaleConstants.ua) {
+          final translatedText = translation.text.replaceAll("кий", "ка");
+          return translatedText;
+        }
+
+        return translation.text;
+      }).toList();
+
+      final translatedAreas = await Future.wait(areasFutures);
+      areas.addAll(translatedAreas);
+    } else {
+      areas.addAll(
+        List.from(json[BodyParameters.meals]).map(
+          (json) => json[BodyParameters.strArea],
+        ),
+      );
+    }
+
     return areas;
   }
 
   @override
   Future<List<Ingredient>> getAllIngredients([String? locale]) async {
-    final json =
-        await _mealDbService.getRequestByPath(ApiConstants.list, {"i": "list"});
+    final json = await _mealDbService.getRequestByPath(ApiConstants.list, {"i": "list"});
 
     final ingredients = List.from(json[BodyParameters.meals])
         .map(

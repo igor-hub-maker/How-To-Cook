@@ -19,7 +19,7 @@ class ListItemComponent extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       child: Card(
-        elevation: 14,
+        elevation: 2,
         color: AppColors.colorScheme.onSecondary,
         shadowColor: AppColors.colorScheme.onSecondary,
         child: Padding(

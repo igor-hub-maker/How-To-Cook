@@ -12,7 +12,7 @@ import 'package:how_to_cook/common/fonts.dart';
 import 'package:how_to_cook/widgets/pages/meal_details/meal_details_state.dart';
 
 class MealDetailsScreen extends StatefulWidget {
-  const MealDetailsScreen({Key? key, required this.meal}) : super(key: key);
+  const MealDetailsScreen({super.key, required this.meal});
 
   final Meal meal;
 
@@ -167,7 +167,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> with TickerProvid
                         children: List.generate(
                           widget.meal.tags?.length ?? 0,
                           (index) => Container(
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                               horizontal: 5,
                               vertical: 2,
                             ),

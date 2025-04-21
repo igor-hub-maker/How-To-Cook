@@ -1,14 +1,11 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:how_to_cook/IoC/composition_root.dart';
-import 'package:how_to_cook/common/app_colors.dart';
 import 'package:how_to_cook/common/fonts.dart';
 import 'package:how_to_cook/widgets/pages/main_page.dart';
-import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

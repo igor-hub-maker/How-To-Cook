@@ -2,9 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:how_to_cook/common/app_colors.dart';
 import 'package:how_to_cook/common/fonts.dart';
-import 'package:how_to_cook/extensions/context_extension.dart';
 import 'package:how_to_cook/generated/locale_keys.g.dart';
-import 'package:how_to_cook/main.dart';
 import 'package:world_flags/world_flags.dart';
 
 class ItemView extends StatelessWidget {
