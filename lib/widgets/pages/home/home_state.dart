@@ -6,12 +6,14 @@ class HomeState {
   final String? error;
   final Meal? meal;
   final Category? category;
+  final List<Meal>? history;
 
   const HomeState({
     this.isLoading = false,
     this.error,
     this.meal,
     this.category,
+    this.history,
   });
 
   HomeState copyWith({
@@ -19,12 +21,14 @@ class HomeState {
     String? error,
     Meal? meal,
     Category? category,
+    List<Meal>? history,
   }) {
     return HomeState(
       isLoading: isLoading ?? this.isLoading,
       error: error ?? this.error,
       meal: meal ?? this.meal,
       category: category ?? this.category,
+      history: history ?? this.history,
     );
   }
 }

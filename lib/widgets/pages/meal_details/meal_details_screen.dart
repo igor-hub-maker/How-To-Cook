@@ -31,7 +31,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> with TickerProvid
         .where((e) => e.demonyms.any((ee) => ee.male == widget.meal.country))
         .firstOrNull;
 
-    screenCubit.loadInitialData();
+    screenCubit.loadInitialData(widget.meal);
     super.initState();
   }
 

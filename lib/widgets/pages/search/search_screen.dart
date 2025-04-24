@@ -21,15 +21,25 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> with TickerProviderStateMixin {
   final screenCubit = SearchCubit();
+  // final searchController = TextEditingController();
 
   late final tabController = TabController(length: 2, vsync: this);
 
   late String currentLocale = context.locale.toString();
 
+  // bool isSearchExpanded = false;
+
   @override
   void initState() {
     screenCubit.loadInitialData(context);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    tabController.dispose();
+    // searchController.dispose();
+    super.dispose();
   }
 
   @override
@@ -77,15 +87,71 @@ class _SearchScreenState extends State<SearchScreen> with TickerProviderStateMix
         fontWeight: FontWeight.w700,
         color: AppColors.colorScheme.primary,
       ),
-      actions: [
-        IconButton.filled(
-          onPressed: () {},
-          icon: const Icon(Icons.search),
-        ),
-        const SizedBox(
-          width: 16,
-        )
-      ],
+      // TODO add searching
+      // actions: [
+      //   AnimatedContainer(
+      //     duration: const Duration(milliseconds: 300),
+      //     width: isSearchExpanded ? context.screenWidth - 40 : 48,
+      //     child: Stack(
+      //       alignment: Alignment.centerRight,
+      //       children: [
+      //         TextField(
+      //           controller: searchController,
+      //           decoration: InputDecoration(
+      //             filled: true,
+      //             contentPadding: const EdgeInsets.only(left: 16),
+      //             constraints: const BoxConstraints(maxHeight: 48),
+      //             suffixIcon: Padding(
+      //               padding: const EdgeInsets.only(right: 50),
+      //               child: IconButton(
+      //                 onPressed: () {
+      //                   if (searchController.text.isNotEmpty) {
+      //                     searchController.clear();
+      //                     return;
+      //                   }
+
+      //                   setState(() {
+      //                     isSearchExpanded = false;
+      //                   });
+      //                   FocusScope.of(context).unfocus();
+      //                 },
+      //                 icon: const Icon(Icons.close),
+      //               ),
+      //             ),
+      //             hintText: "Search",
+      //             hintStyle: const TextStyle(
+      //               fontFamily: Fonts.Comfortaa,
+      //               fontSize: 16,
+      //               fontWeight: FontWeight.w400,
+      //             ),
+      //             border: OutlineInputBorder(
+      //               borderRadius: BorderRadius.circular(100),
+      //               borderSide: BorderSide(
+      //                 color: AppColors.colorScheme.onSecondary,
+      //                 width: 1,
+      //               ),
+      //             ),
+      //           ),
+      //         ),
+      //         IconButton.filled(
+      //           onPressed: () {
+      //             if (isSearchExpanded) {
+      //               log("message");
+      //             } else {
+      //               setState(() {
+      //                 isSearchExpanded = !isSearchExpanded;
+      //               });
+      //             }
+      //           },
+      //           icon: const Icon(Icons.search),
+      //         ),
+      //       ],
+      //     ),
+      //   ),
+      //   const SizedBox(
+      //     width: 16,
+      //   )
+      // ],
       bottom: TabBar(
         controller: tabController,
         tabs: const [
