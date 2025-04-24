@@ -73,34 +73,35 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-              IconButton.filled(
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) => AlertDialog(
-                      title: const Text('Settings'),
-                      content: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: List.generate(
-                          context.supportedLocales.length,
-                          (index) {
-                            final locale = context.supportedLocales[index];
-                            return ListTile(
-                              title: Text(locale.toLanguageTag()),
-                              trailing: locale == context.locale ? const Icon(Icons.check) : null,
-                              onTap: () {
-                                context.setLocale(locale);
-                                Navigator.pop(context);
-                              },
-                            );
-                          },
-                        ),
-                      ),
-                    ),
-                  );
-                },
-                icon: const Icon(Icons.settings_rounded),
-              ),
+              // TODO add localization
+              // IconButton.filled(
+              //   onPressed: () {
+              //     showDialog(
+              //       context: context,
+              //       builder: (context) => AlertDialog(
+              //         title: const Text('Settings'),
+              //         content: Column(
+              //           mainAxisSize: MainAxisSize.min,
+              //           children: List.generate(
+              //             context.supportedLocales.length,
+              //             (index) {
+              //               final locale = context.supportedLocales[index];
+              //               return ListTile(
+              //                 title: Text(locale.toLanguageTag()),
+              //                 trailing: locale == context.locale ? const Icon(Icons.check) : null,
+              //                 onTap: () {
+              //                   context.setLocale(locale);
+              //                   Navigator.pop(context);
+              //                 },
+              //               );
+              //             },
+              //           ),
+              //         ),
+              //       ),
+              //     );
+              //   },
+              //   icon: const Icon(Icons.settings_rounded),
+              // ),
             ],
           ),
           const SizedBox(height: 10),
@@ -134,6 +135,33 @@ class _HomeScreenState extends State<HomeScreen> {
               category: state.category!,
             ),
           ),
+          const SizedBox(height: 20),
+          const Text(
+            "Нещодавно переглянуте",
+            style: TextStyle(
+              fontFamily: Fonts.Comfortaa,
+              fontWeight: FontWeight.w700,
+              fontSize: 24,
+            ),
+          ),
+          const SizedBox(height: 6),
+          for (var meal in state.history ?? [])
+            GestureDetector(
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => MealDetailsScreen(
+                    meal: meal,
+                  ),
+                ),
+              ),
+              child: Container(
+                margin: const EdgeInsets.only(bottom: 10),
+                child: MealItemView(
+                  meal: meal,
+                ),
+              ),
+            ),
         ],
       ),
     );

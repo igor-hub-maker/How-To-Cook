@@ -39,7 +39,7 @@ class Meal extends MealShort {
           ingredients: List.generate(20, (index) {
             final ingredient = json['${BodyParameters.strIngredient}${index + 1}'];
             final measure = json['${BodyParameters.strMeasure}${index + 1}'];
-            if (ingredient != null && ingredient.isNotEmpty) {
+            if (ingredient != null && ingredient.isNotEmpty && ingredient != '') {
               return MealIngredient(name: ingredient, measure: measure);
             }
             return null;

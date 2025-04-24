@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:how_to_cook/managers/history/history_manager.dart';
 import 'package:how_to_cook/managers/meal/meal_manager.dart';
 import 'package:how_to_cook/managers/meal_of_day/meal_of_day_manager.dart';
 import 'package:how_to_cook/models/category.dart';
@@ -13,6 +14,7 @@ class HomeCubit extends Cubit<HomeState> {
 
   late final MealManager _mealManager;
   late final MealOfDayManager _mealOfDayManager;
+  late final HistoryManager _historyManager;
 
   Future<void> loadInitialData(BuildContext context) async {
     final stableState = state;
@@ -23,10 +25,12 @@ class HomeCubit extends Cubit<HomeState> {
       final injector = Injector.appInstance;
       _mealManager = injector.get<MealManager>();
       _mealOfDayManager = injector.get<MealOfDayManager>();
+      _historyManager = injector.get<HistoryManager>();
 
-      final [meal, category] = await Future.wait([
+      final [meal, category, history] = await Future.wait([
         _mealOfDayManager.getMealOfDay(),
         _mealOfDayManager.getCategoryOfDay(),
+_historyManager.getHistory(),
       ]);
 
       emit(
@@ -34,6 +38,7 @@ class HomeCubit extends Cubit<HomeState> {
           isLoading: false,
           meal: meal as Meal,
           category: category as Category,
+          history: history as List<Meal>,
         ),
       );
     } catch (error) {
