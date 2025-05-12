@@ -1,4 +1,5 @@
 mixin BodyParameters {
+  static const String id = 'id';
   static const String idMeal = 'idMeal';
   static const String strMeal = 'strMeal';
   static const String strCategory = 'strCategory';
@@ -11,7 +12,7 @@ mixin BodyParameters {
   static const String strSource = 'strSource';
   static const String strMealThumb = 'strMealThumb';
   static const String name = 'name';
-  static const String measure = 'strMealThumb';
+  static const String measure = 'measure';
   static const String meals = 'meals';
   static const String categories = 'categories';
   static const String strArea = 'strArea';
@@ -21,4 +22,6 @@ mixin BodyParameters {
   static const String idIngredient = 'idIngredient';
   static const String strDescription = 'strDescription';
   static const String strType = 'strType';
+  static const String count = 'count';
+  static const String isMarked = 'isMarked';
 }

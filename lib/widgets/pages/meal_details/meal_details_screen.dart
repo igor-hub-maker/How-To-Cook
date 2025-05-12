@@ -188,14 +188,26 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> with TickerProvid
                         ),
                       ),
                       const SizedBox(height: 16),
-                      Text(
-                        "${widget.meal.ingredients.length} data",
-                        style: const TextStyle(
-                          fontFamily: Fonts.Comfortaa,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
-                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "${widget.meal.ingredients.length} Products",
+                            style: const TextStyle(
+                              fontFamily: Fonts.Comfortaa,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          TextButton.icon(
+                            onPressed: screenCubit.addProductsToCart,
+                            label: Text("Add to cart"),
+                            icon: const Icon(Icons.add_shopping_cart_rounded),
+                            iconAlignment: IconAlignment.end,
+                          ),
+                        ],
                       ),
+                      const SizedBox(height: 10),
                       Wrap(
                         alignment: WrapAlignment.start,
                         runSpacing: 10,

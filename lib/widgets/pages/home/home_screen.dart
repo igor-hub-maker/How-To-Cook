@@ -3,11 +3,11 @@ import 'dart:developer';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:focus_detector/focus_detector.dart';
 import 'package:how_to_cook/common/app_colors.dart';
 import 'package:how_to_cook/common/enums/meal_filtering_type.dart';
 import 'package:how_to_cook/common/fonts.dart';
 import 'package:how_to_cook/generated/locale_keys.g.dart';
-import 'package:how_to_cook/widgets/pages/filtered_meals/filtered_meals_cubit.dart';
 import 'package:how_to_cook/widgets/pages/filtered_meals/filtered_meals_screen.dart';
 import 'package:how_to_cook/widgets/pages/home/home_cubit.dart';
 import 'package:how_to_cook/widgets/pages/home/home_state.dart';
@@ -33,25 +33,32 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: BlocConsumer<HomeCubit, HomeState>(
-        bloc: screenCubit,
-        listener: (BuildContext context, HomeState state) {
-          if (state.error != null) {
-            log(state.error.toString());
-          }
-        },
-        builder: (BuildContext context, HomeState state) {
-          if (state.isLoading) {
-            return Center(
-              child: CircularProgressIndicator(
-                color: AppColors.colorScheme.primary,
-              ),
-            );
-          }
+    return FocusDetector(
+      onFocusGained: () {
+        if (!screenCubit.state.isLoading) {
+          screenCubit.updateData();
+        }
+      },
+      child: Scaffold(
+        body: BlocConsumer<HomeCubit, HomeState>(
+          bloc: screenCubit,
+          listener: (BuildContext context, HomeState state) {
+            if (state.error != null) {
+              log(state.error.toString());
+            }
+          },
+          builder: (BuildContext context, HomeState state) {
+            if (state.isLoading) {
+              return Center(
+                child: CircularProgressIndicator(
+                  color: AppColors.colorScheme.primary,
+                ),
+              );
+            }
 
-          return buildBody(state);
-        },
+            return buildBody(state);
+          },
+        ),
       ),
     );
   }
@@ -136,15 +143,17 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           const SizedBox(height: 20),
-          const Text(
-            "Нещодавно переглянуте",
-            style: TextStyle(
-              fontFamily: Fonts.Comfortaa,
-              fontWeight: FontWeight.w700,
-              fontSize: 24,
+          if (state.history != null && state.history!.isNotEmpty) ...[
+            const Text(
+              "Нещодавно переглянуті",
+              style: TextStyle(
+                fontFamily: Fonts.Comfortaa,
+                fontWeight: FontWeight.w700,
+                fontSize: 24,
+              ),
             ),
-          ),
-          const SizedBox(height: 6),
+            const SizedBox(height: 6),
+          ],
           for (var meal in state.history ?? [])
             GestureDetector(
               onTap: () => Navigator.push(
