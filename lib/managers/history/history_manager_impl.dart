@@ -1,4 +1,4 @@
-import 'package:how_to_cook/common/locale_db_constants.dart';
+import 'package:how_to_cook/common/local_db_constants.dart';
 import 'package:how_to_cook/managers/history/history_manager.dart';
 import 'package:how_to_cook/models/meal.dart';
 import 'package:how_to_cook/services/local_db/local_db_service.dart';
@@ -9,18 +9,18 @@ class HistoryManagerImpl implements HistoryManager {
 
   @override
   Future<void> addToHistory(Meal meal) {
-    return _localDbService.db.insert(LocaleDbConstants.MealsHistoryTable, meal.toJson());
+    return _localDbService.db.insert(LocalDbConstants.MealsHistoryTable, meal.toJson());
   }
 
   @override
   Future<void> clearHistory() {
-    return _localDbService.db.delete(LocaleDbConstants.MealsHistoryTable);
+    return _localDbService.db.delete(LocalDbConstants.MealsHistoryTable);
   }
 
   @override
   Future<List<Meal>> getHistory([int limit = 3]) async {
     final json = await _localDbService.db.query(
-      LocaleDbConstants.MealsHistoryTable,
+      LocalDbConstants.MealsHistoryTable,
       orderBy: "id DESC",
       limit: limit,
     );

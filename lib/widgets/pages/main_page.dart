@@ -3,6 +3,7 @@ import 'package:how_to_cook/common/app_colors.dart';
 import 'package:how_to_cook/extensions/context_extension.dart';
 import 'package:how_to_cook/models/tab.dart';
 import 'package:how_to_cook/widgets/pages/home/home_screen.dart';
+import 'package:how_to_cook/widgets/pages/products_cart/products_cart_screen.dart';
 import 'package:how_to_cook/widgets/pages/search/search_screen.dart';
 import 'package:how_to_cook/widgets/views/animated_indexed_stack.dart';
 
@@ -19,6 +20,7 @@ class _MainPageState extends State<MainPage> {
   final tabs = [
     TabData(icon: Icons.home, widget: const HomeScreen()),
     TabData(icon: Icons.search, widget: const SearchScreen()),
+    TabData(icon: Icons.shopping_cart_rounded, widget: const ProductsCartScreen()),
   ];
 
   @override

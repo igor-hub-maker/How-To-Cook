@@ -27,23 +27,29 @@ class HomeCubit extends Cubit<HomeState> {
       _mealOfDayManager = injector.get<MealOfDayManager>();
       _historyManager = injector.get<HistoryManager>();
 
-      final [meal, category, history] = await Future.wait([
-        _mealOfDayManager.getMealOfDay(),
-        _mealOfDayManager.getCategoryOfDay(),
-_historyManager.getHistory(),
-      ]);
-
-      emit(
-        state.copyWith(
-          isLoading: false,
-          meal: meal as Meal,
-          category: category as Category,
-          history: history as List<Meal>,
-        ),
-      );
+      await updateData(true);
     } catch (error) {
       emit(state.copyWith(error: error.toString()));
       emit(stableState.copyWith(isLoading: false));
     }
+  }
+
+  Future<void> updateData([bool showLoader = false]) async {
+    emit(state.copyWith(isLoading: showLoader));
+
+    final [meal, category, history] = await Future.wait([
+      _mealOfDayManager.getMealOfDay(),
+      _mealOfDayManager.getCategoryOfDay(),
+      _historyManager.getHistory(),
+    ]);
+
+    emit(
+      state.copyWith(
+        isLoading: false,
+        meal: meal as Meal,
+        category: category as Category,
+        history: history as List<Meal>,
+      ),
+    );
   }
 }
