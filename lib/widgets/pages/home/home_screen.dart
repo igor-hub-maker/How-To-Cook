@@ -112,18 +112,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
           const SizedBox(height: 10),
-          GestureDetector(
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) => MealDetailsScreen(
-                  meal: state.meal!,
-                ),
-              ),
-            ),
-            child: MealItemView(
-              meal: state.meal!,
-            ),
+          MealItemView(
+            meal: state.meal!,
           ),
           const SizedBox(height: 20),
           GestureDetector(
@@ -155,20 +145,10 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(height: 6),
           ],
           for (var meal in state.history ?? [])
-            GestureDetector(
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => MealDetailsScreen(
-                    meal: meal,
-                  ),
-                ),
-              ),
-              child: Container(
-                margin: const EdgeInsets.only(bottom: 10),
-                child: MealItemView(
-                  meal: meal,
-                ),
+            Container(
+              margin: const EdgeInsets.only(bottom: 10),
+              child: MealItemView(
+                meal: meal,
               ),
             ),
         ],

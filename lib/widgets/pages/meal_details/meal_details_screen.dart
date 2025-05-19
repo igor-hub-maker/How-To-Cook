@@ -51,14 +51,24 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> with TickerProvid
 
         return Scaffold(
           body: buildBody(state),
-          appBar: buidAppBar(state),
+          appBar: buildAppBar(state),
         );
       },
     );
   }
 
-  PreferredSizeWidget buidAppBar(MealDetailsState state) {
-    return AppBar();
+  PreferredSizeWidget buildAppBar(MealDetailsState state) {
+    return AppBar(
+      actions: [
+        IconButton(
+          onPressed: screenCubit.saveMeal,
+          icon: Icon(
+            state.isSaved ? Icons.bookmark_rounded : Icons.bookmark_outline_rounded,
+            color: AppColors.colorScheme.onPrimaryContainer,
+          ),
+        ),
+      ],
+    );
   }
 
   Widget buildBody(MealDetailsState state) {

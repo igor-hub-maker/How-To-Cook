@@ -1,6 +1,4 @@
 import 'package:how_to_cook/common/rest/body_parameters.dart';
-import 'package:how_to_cook/extensions/string_extensions.dart';
-import 'package:how_to_cook/models/meal_ingredient.dart';
 
 class MealShort {
   String id;

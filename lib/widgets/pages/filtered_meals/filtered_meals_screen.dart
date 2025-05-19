@@ -91,11 +91,9 @@ class _FilteredMealsScreenState extends State<FilteredMealsScreen> {
             physics: const NeverScrollableScrollPhysics(),
             padding: const EdgeInsets.all(16),
             itemCount: state.meals?.length ?? 0,
-            itemBuilder: (context, index) => GestureDetector(
-              onTap: () => screenCubit.openMealDetails(state.meals![index], context),
-              child: MealItemView(
-                meal: state.meals![index],
-              ),
+            itemBuilder: (context, index) => MealItemView(
+              meal: state.meals![index],
+              onTap: () => screenCubit.getMealDetails(state.meals![index]),
             ),
             separatorBuilder: (context, index) => const SizedBox(height: 16),
           ),

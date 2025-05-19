@@ -66,14 +66,14 @@ class _SearchScreenState extends State<SearchScreen> with TickerProviderStateMix
 
           return Scaffold(
             body: buildBody(state),
-            appBar: buidAppBar(state),
+            appBar: buildAppBar(state),
           );
         },
       ),
     );
   }
 
-  PreferredSizeWidget buidAppBar(SearchState state) {
+  PreferredSizeWidget buildAppBar(SearchState state) {
     return AppBar(
       centerTitle: false,
       actionsIconTheme: IconThemeData(
