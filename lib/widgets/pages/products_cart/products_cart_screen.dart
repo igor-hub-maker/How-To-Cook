@@ -9,6 +9,7 @@ import 'package:how_to_cook/models/product.dart';
 import 'package:how_to_cook/widgets/pages/products_cart/items/product_cart_item_component.dart';
 import 'package:how_to_cook/widgets/pages/products_cart/products_cart_cubit.dart';
 import 'package:how_to_cook/widgets/pages/products_cart/products_cart_state.dart';
+import 'package:how_to_cook/widgets/views/expandable_search_button.dart';
 
 class ProductsCartScreen extends StatefulWidget {
   const ProductsCartScreen({Key? key}) : super(key: key);
@@ -19,22 +20,13 @@ class ProductsCartScreen extends StatefulWidget {
 
 class _ProductsCartScreenState extends State<ProductsCartScreen> {
   final screenCubit = ProductsCartCubit();
-  final searchController = TextEditingController();
-  final FocusNode _searchFocusNode = FocusNode();
 
   String filter = "";
-  bool isSearchExpanded = false;
 
   @override
   void initState() {
     screenCubit.loadInitialData();
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    searchController.dispose();
-    super.dispose();
   }
 
   @override
@@ -85,79 +77,23 @@ class _ProductsCartScreenState extends State<ProductsCartScreen> {
   PreferredSizeWidget buildAppBar() {
     return AppBar(
       centerTitle: false,
-      title: Text(
-        'Products Cart',
-        style: TextStyle(
-          fontFamily: Fonts.Comfortaa,
-          fontSize: 20,
-          fontWeight: FontWeight.w700,
-          color: context.isDarkMode ? Colors.white : Colors.black,
-        ),
+      title: Text('Products Cart'),
+      titleTextStyle: TextStyle(
+        fontFamily: Fonts.Comfortaa,
+        fontSize: 32,
+        fontWeight: FontWeight.w700,
+        color: AppColors.colorScheme.primary,
       ),
       actionsIconTheme: IconThemeData(
         size: 30,
         color: AppColors.colorScheme.onSecondary,
       ),
       actions: [
-        AnimatedContainer(
-          duration: const Duration(milliseconds: 300),
-          width: isSearchExpanded ? context.screenWidth - 40 : 48,
-          child: Stack(
-            alignment: Alignment.centerRight,
-            children: [
-              TextField(
-                focusNode: _searchFocusNode,
-                controller: searchController,
-                onChanged: (value) {
-                  setState(() {
-                    filter = value;
-                  });
-                },
-                decoration: InputDecoration(
-                  filled: true,
-                  contentPadding: const EdgeInsets.only(left: 16),
-                  constraints: const BoxConstraints(maxHeight: 48),
-                  hintText: "Search",
-                  hintStyle: const TextStyle(
-                    fontFamily: Fonts.Comfortaa,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(100),
-                    borderSide: BorderSide(
-                      color: AppColors.colorScheme.onSecondary,
-                      width: 1,
-                    ),
-                  ),
-                ),
-              ),
-              IconButton.filled(
-                onPressed: () {
-                  setState(() {
-                    isSearchExpanded = !isSearchExpanded;
-                  });
-
-                  if (isSearchExpanded) {
-                    FocusScope.of(context).requestFocus(_searchFocusNode);
-                    return;
-                  }
-
-                  searchController.clear();
-                  filter = "";
-                  FocusScope.of(context).unfocus();
-                },
-                icon: AnimatedSwitcher(
-                  duration: Durations.short4,
-                  child: Icon(
-                    isSearchExpanded ? Icons.close : Icons.search,
-                    key: ValueKey(isSearchExpanded),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
+        ExpandableSearchButton(onChanged: (filterChanged) {
+          setState(() {
+            filter = filterChanged;
+          });
+        }),
         const SizedBox(width: 16),
       ],
     );

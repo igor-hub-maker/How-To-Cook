@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:how_to_cook/common/enums/meal_filtering_type.dart';
 import 'package:how_to_cook/managers/meal/meal_manager.dart';
+import 'package:how_to_cook/models/meal.dart';
 import 'package:how_to_cook/models/meal_short.dart';
 import 'package:how_to_cook/widgets/pages/filtered_meals/filtered_meals_state.dart';
 import 'package:how_to_cook/widgets/pages/meal_details/meal_details_screen.dart';
@@ -29,14 +30,9 @@ class FilteredMealsCubit extends Cubit<FilteredMealsState> {
     }
   }
 
-  Future<void> openMealDetails(MealShort meal, BuildContext context) async {
+  Future<Meal> getMealDetails(MealShort meal) async {
     final mealDetails = await mealManager.getMealDetails(meal.id);
 
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => MealDetailsScreen(meal: mealDetails),
-      ),
-    );
+    return mealDetails;
   }
 }

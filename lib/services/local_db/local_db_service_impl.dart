@@ -18,6 +18,7 @@ class LocalDbServiceImpl implements LocalDbService {
       onCreate: (db, version) async {
         await db.execute(LocalDbConstants.createMealsHistoryTableCommand);
         await db.execute(LocalDbConstants.createProductsCartTableCommand);
+        await db.execute(LocalDbConstants.createSavedMealsTableCommand);
       },
     );
   }
