@@ -9,6 +9,7 @@ import 'package:how_to_cook/models/product.dart';
 import 'package:how_to_cook/widgets/pages/products_cart/items/product_cart_item_component.dart';
 import 'package:how_to_cook/widgets/pages/products_cart/products_cart_cubit.dart';
 import 'package:how_to_cook/widgets/pages/products_cart/products_cart_state.dart';
+import 'package:how_to_cook/widgets/views/empty_state_view.dart';
 import 'package:how_to_cook/widgets/views/expandable_search_button.dart';
 
 class ProductsCartScreen extends StatefulWidget {
@@ -100,6 +101,12 @@ class _ProductsCartScreenState extends State<ProductsCartScreen> {
   }
 
   Widget buildBody(ProductsCartState state, bool containsSelectedItems) {
+    if (state.products == null || state.products!.isEmpty) {
+      return const Center(
+        child: EmptyStateView(message: "No products in the cart"),
+      );
+    }
+
     return ListView(
       children: [
         ListView(

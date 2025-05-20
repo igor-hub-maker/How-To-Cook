@@ -9,6 +9,7 @@ import 'package:how_to_cook/extensions/context_extension.dart';
 import 'package:how_to_cook/models/meal.dart';
 import 'package:how_to_cook/widgets/pages/saved_meals/saved_meals_cubit.dart';
 import 'package:how_to_cook/widgets/pages/saved_meals/saved_meals_state.dart';
+import 'package:how_to_cook/widgets/views/empty_state_view.dart';
 import 'package:how_to_cook/widgets/views/expandable_search_button.dart';
 import 'package:how_to_cook/widgets/views/meal_item_view.dart';
 
@@ -86,6 +87,12 @@ class _SavedMealsScreenState extends State<SavedMealsScreen> {
   }
 
   Widget buildBody(SavedMealsState state) {
+    if (state.meals == null || state.meals!.isEmpty) {
+      return const EmptyStateView(
+        message: "No saved meals available",
+      );
+    }
+
     return ListView.builder(
       padding: const EdgeInsets.all(16),
       itemCount: state.meals?.length ?? 0,
