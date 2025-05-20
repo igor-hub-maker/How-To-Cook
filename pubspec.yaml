@@ -24,6 +24,7 @@ dependencies:
   world_flags: ^1.1.1
   fraction: ^3.0.1
   fluttertoast: ^8.2.12
+  flutter_launcher_icons: ^0.14.3
 
 dev_dependencies:
   flutter_test:
