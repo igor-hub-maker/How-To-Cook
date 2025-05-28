@@ -11,6 +11,7 @@ import 'package:how_to_cook/widgets/pages/products_cart/products_cart_cubit.dart
 import 'package:how_to_cook/widgets/pages/products_cart/products_cart_state.dart';
 import 'package:how_to_cook/widgets/views/empty_state_view.dart';
 import 'package:how_to_cook/widgets/views/expandable_search_button.dart';
+import 'package:how_to_cook/widgets/views/loading_indicator.dart';
 
 class ProductsCartScreen extends StatefulWidget {
   const ProductsCartScreen({Key? key}) : super(key: key);
@@ -50,7 +51,7 @@ class _ProductsCartScreenState extends State<ProductsCartScreen> {
               screenCubit.state.products?.any((product) => product.isMarked);
 
           if (state.isLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return const LoadingIndicator();
           }
 
           return Scaffold(
@@ -84,6 +85,7 @@ class _ProductsCartScreenState extends State<ProductsCartScreen> {
         fontSize: 32,
         fontWeight: FontWeight.w700,
         color: AppColors.colorScheme.primary,
+        overflow: TextOverflow.fade,
       ),
       actionsIconTheme: IconThemeData(
         size: 30,

@@ -11,6 +11,7 @@ import 'package:how_to_cook/widgets/pages/filtered_meals/filtered_meals_screen.d
 import 'package:how_to_cook/widgets/pages/search/items/list_item_component.dart';
 import 'package:how_to_cook/widgets/pages/search/search_cubit.dart';
 import 'package:how_to_cook/widgets/pages/search/search_state.dart';
+import 'package:how_to_cook/widgets/views/loading_indicator.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -61,7 +62,7 @@ class _SearchScreenState extends State<SearchScreen> with TickerProviderStateMix
         },
         builder: (BuildContext context, SearchState state) {
           if (state.isLoading) {
-            return const Scaffold(body: Center(child: CircularProgressIndicator()));
+            return const Scaffold(body: LoadingIndicator());
           }
 
           return Scaffold(
@@ -168,44 +169,39 @@ class _SearchScreenState extends State<SearchScreen> with TickerProviderStateMix
 
   Widget buildBody(SearchState state) {
     return TabBarView(controller: tabController, children: [
-      ListView.builder(
-        itemCount: state.categories?.length ?? 0,
-        itemBuilder: (context, index) => GestureDetector(
-          onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => FilteredMealsScreen(
-                mealFilteringType: MealFilteringType.category,
-                filter: state.categories![index].originalName,
-                name: state.categories![index].name,
-                description: state.categories![index].description,
-              ),
-            ),
-          ),
-          child: ListItemComponent(
-            title: state.categories![index].name,
-            description: state.categories![index].description,
-          ),
+      buildCategories(state),
+      buildAreas(state),
+    ]);
+  }
+
+  Widget buildCategories(SearchState state) {
+    return ListView.builder(
+      itemCount: state.categories?.length ?? 0,
+      itemBuilder: (context, index) => ListItemComponent(
+        title: state.categories![index].name,
+        description: state.categories![index].description,
+        image: state.categories![index].imageUrl,
+        openBuilder: (context, action) => FilteredMealsScreen(
+          mealFilteringType: MealFilteringType.category,
+          filter: state.categories![index].originalName,
+          name: state.categories![index].name,
+          description: state.categories![index].description,
         ),
       ),
-      ListView.builder(
-        itemCount: state.areas?.length ?? 0,
-        itemBuilder: (context, index) => GestureDetector(
-          onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => FilteredMealsScreen(
-                mealFilteringType: MealFilteringType.area,
-                filter: state.areas![index].name,
-                name: state.areas![index].localizedName,
-              ),
-            ),
-          ),
-          child: ListItemComponent(
-            title: state.areas![index].localizedName,
-          ),
+    );
+  }
+
+  Widget buildAreas(SearchState state) {
+    return ListView.builder(
+      itemCount: state.areas?.length ?? 0,
+      itemBuilder: (context, index) => ListItemComponent(
+        title: state.areas![index].localizedName,
+        openBuilder: (context, action) => FilteredMealsScreen(
+          mealFilteringType: MealFilteringType.area,
+          filter: state.areas![index].name,
+          name: state.areas![index].localizedName,
         ),
-      )
-    ]);
+      ),
+    );
   }
 }
