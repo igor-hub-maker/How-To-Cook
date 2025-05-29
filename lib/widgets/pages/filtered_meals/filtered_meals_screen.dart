@@ -7,6 +7,7 @@ import 'package:how_to_cook/common/enums/meal_filtering_type.dart';
 import 'package:how_to_cook/common/fonts.dart';
 import 'package:how_to_cook/widgets/pages/filtered_meals/filtered_meals_cubit.dart';
 import 'package:how_to_cook/widgets/pages/filtered_meals/filtered_meals_state.dart';
+import 'package:how_to_cook/widgets/views/loading_indicator.dart';
 import 'package:how_to_cook/widgets/views/meal_item_view.dart';
 
 class FilteredMealsScreen extends StatefulWidget {
@@ -49,7 +50,7 @@ class _FilteredMealsScreenState extends State<FilteredMealsScreen> {
         },
         builder: (BuildContext context, FilteredMealsState state) {
           if (state.isLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return const LoadingIndicator();
           }
 
           return buildBody(state);
@@ -93,7 +94,6 @@ class _FilteredMealsScreenState extends State<FilteredMealsScreen> {
             itemCount: state.meals?.length ?? 0,
             itemBuilder: (context, index) => MealItemView(
               meal: state.meals![index],
-              onTap: () => screenCubit.getMealDetails(state.meals![index]),
             ),
             separatorBuilder: (context, index) => const SizedBox(height: 16),
           ),

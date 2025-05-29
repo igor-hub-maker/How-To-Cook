@@ -5,6 +5,7 @@ import 'package:how_to_cook/managers/meal/meal_manager.dart';
 import 'package:how_to_cook/managers/products_cart/products_cart_manager.dart';
 import 'package:how_to_cook/managers/saved_meals/saved_meals_manager.dart';
 import 'package:how_to_cook/models/meal.dart';
+import 'package:how_to_cook/models/meal_short.dart';
 import 'package:injector/injector.dart';
 
 import 'meal_details_state.dart';
@@ -16,7 +17,7 @@ class MealDetailsCubit extends Cubit<MealDetailsState> {
   late final ProductsCartManager productsCartManager;
   late final SavedMealsManager savedMealsManager;
 
-  Future<void> loadInitialData(Meal meal) async {
+  Future<void> loadInitialData(MealShort meal) async {
     final stableState = state;
     try {
       emit(state.copyWith(isLoading: true));
@@ -27,13 +28,17 @@ class MealDetailsCubit extends Cubit<MealDetailsState> {
       productsCartManager = injector.get<ProductsCartManager>();
       savedMealsManager = injector.get<SavedMealsManager>();
 
+      if (meal is! Meal) {
+        meal = await mealManager.getMealDetails(meal.id);
+      }
+
       historyManager.addToHistory(meal);
       final isSaved = await savedMealsManager.checkIsMealSaved(meal.id);
 
       emit(state.copyWith(isLoading: false, meal: meal, isSaved: isSaved));
     } catch (error) {
       emit(state.copyWith(error: error.toString()));
-      emit(stableState.copyWith(isLoading: false, meal: meal));
+      emit(stableState.copyWith(isLoading: false));
     }
   }
 

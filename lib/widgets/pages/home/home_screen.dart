@@ -4,6 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:focus_detector/focus_detector.dart';
+import 'package:how_to_cook/common/animations.dart';
 import 'package:how_to_cook/common/app_colors.dart';
 import 'package:how_to_cook/common/enums/meal_filtering_type.dart';
 import 'package:how_to_cook/common/fonts.dart';
@@ -12,8 +13,9 @@ import 'package:how_to_cook/widgets/pages/filtered_meals/filtered_meals_screen.d
 import 'package:how_to_cook/widgets/pages/home/home_cubit.dart';
 import 'package:how_to_cook/widgets/pages/home/home_state.dart';
 import 'package:how_to_cook/widgets/views/%20category_item_view.dart';
+import 'package:how_to_cook/widgets/views/loading_indicator.dart';
 import 'package:how_to_cook/widgets/views/meal_item_view.dart';
-import 'package:how_to_cook/widgets/pages/meal_details/meal_details_screen.dart';
+import 'package:lottie/lottie.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -49,11 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
           },
           builder: (BuildContext context, HomeState state) {
             if (state.isLoading) {
-              return Center(
-                child: CircularProgressIndicator(
-                  color: AppColors.colorScheme.primary,
-                ),
-              );
+              return const LoadingIndicator();
             }
 
             return buildBody(state);
@@ -116,21 +114,8 @@ class _HomeScreenState extends State<HomeScreen> {
             meal: state.meal!,
           ),
           const SizedBox(height: 20),
-          GestureDetector(
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) => FilteredMealsScreen(
-                  filter: state.category!.originalName,
-                  mealFilteringType: MealFilteringType.category,
-                  name: state.category!.name,
-                  description: state.category!.description,
-                ),
-              ),
-            ),
-            child: CategoryItemView(
-              category: state.category!,
-            ),
+          CategoryItemView(
+            category: state.category!,
           ),
           const SizedBox(height: 20),
           if (state.history != null && state.history!.isNotEmpty) ...[

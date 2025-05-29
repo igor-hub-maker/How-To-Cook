@@ -5,12 +5,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:how_to_cook/common/app_colors.dart';
 import 'package:how_to_cook/common/fonts.dart';
-import 'package:how_to_cook/extensions/context_extension.dart';
 import 'package:how_to_cook/models/meal.dart';
 import 'package:how_to_cook/widgets/pages/saved_meals/saved_meals_cubit.dart';
 import 'package:how_to_cook/widgets/pages/saved_meals/saved_meals_state.dart';
 import 'package:how_to_cook/widgets/views/empty_state_view.dart';
 import 'package:how_to_cook/widgets/views/expandable_search_button.dart';
+import 'package:how_to_cook/widgets/views/loading_indicator.dart';
 import 'package:how_to_cook/widgets/views/meal_item_view.dart';
 
 class SavedMealsScreen extends StatefulWidget {
@@ -48,7 +48,7 @@ class _SavedMealsScreenState extends State<SavedMealsScreen> {
         },
         builder: (BuildContext context, SavedMealsState state) {
           if (state.isLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return const LoadingIndicator();
           }
 
           return Scaffold(
@@ -71,6 +71,7 @@ class _SavedMealsScreenState extends State<SavedMealsScreen> {
         fontSize: 32,
         fontWeight: FontWeight.w700,
         color: AppColors.colorScheme.primary,
+        overflow: TextOverflow.fade,
       ),
       actionsIconTheme: IconThemeData(
         size: 30,
@@ -78,9 +79,12 @@ class _SavedMealsScreenState extends State<SavedMealsScreen> {
       ),
       actions: [
         ExpandableSearchButton(
-            onChanged: (value) => setState(() {
-                  filter = value;
-                })),
+          onChanged: (value) => setState(
+            () {
+              filter = value;
+            },
+          ),
+        ),
         const SizedBox(width: 16),
       ],
     );

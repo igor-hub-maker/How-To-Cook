@@ -25,6 +25,8 @@ dependencies:
   fraction: ^3.0.1
   fluttertoast: ^8.2.12
   flutter_launcher_icons: ^0.14.3
+  animations: ^2.0.11
+  lottie: ^3.2.0
 
 dev_dependencies:
   flutter_test:
@@ -35,6 +37,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/translations/
+    - assets/animations/
 
 fonts:
     - family: Comfortaa
