@@ -14,6 +14,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Recreate config.json
+        run: |
+          mkdir -p assets
+          echo "$CONFIG_JSON" | base64 -d > assets/config.json
+        env:
+          CONFIG_JSON: ${{ secrets.CONFIG_JSON }}
+
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
