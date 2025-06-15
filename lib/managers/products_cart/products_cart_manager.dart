@@ -19,4 +19,6 @@ abstract class ProductsCartManager {
   Future<List<Product>> getCartItems();
 
   Future<void> markCartItem(int productId, bool isMarked);
+
+  Future<void> localizeCartItems();
 }

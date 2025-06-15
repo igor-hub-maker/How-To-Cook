@@ -27,4 +27,5 @@ mixin BodyParameters {
   static const String text = 'text';
   static const String targetLanguage = 'target_lang';
   static const String translations = 'translations';
+  static const String locale = "locale";
 }

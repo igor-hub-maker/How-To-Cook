@@ -21,6 +21,8 @@ Future<void> main() async {
   final injector = Injector.appInstance;
   await injector.get<LocalDbService>().init();
 
+  loadConfig();
+
   runApp(
     EasyLocalization(
       supportedLocales: const [Locale('en'), Locale('de'), Locale('uk')],

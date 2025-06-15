@@ -22,5 +22,11 @@ abstract class  LocaleKeys {
   static const ReadMore = 'ReadMore';
   static const ReadLess = 'ReadLess';
   static const AddedToCart = 'AddedToCart';
+  static const ChangeLanguage = 'ChangeLanguage';
+  static const DevelopedBy = 'DevelopedBy';
+  static const English = 'English';
+  static const German = 'German';
+  static const Ukrainian = 'Ukrainian';
+  static const BrowserOpenFail = 'BrowserOpenFail';
 
 }

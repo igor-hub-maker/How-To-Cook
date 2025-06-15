@@ -22,7 +22,7 @@ class SavedMealsScreen extends StatefulWidget {
   _SavedMealsScreenState createState() => _SavedMealsScreenState();
 }
 
-class _SavedMealsScreenState extends State<SavedMealsScreen> {
+class _SavedMealsScreenState extends State<SavedMealsScreen> with AutomaticKeepAliveClientMixin {
   final screenCubit = SavedMealsCubit();
 
   String filter = "";
@@ -35,6 +35,8 @@ class _SavedMealsScreenState extends State<SavedMealsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     return FocusDetector(
       onFocusGained: () {
         if (!screenCubit.state.isLoading) {
@@ -121,4 +123,7 @@ class _SavedMealsScreenState extends State<SavedMealsScreen> {
       meal: meal,
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

@@ -26,6 +26,7 @@ dependencies:
   flutter_launcher_icons: ^0.14.3
   animations: ^2.0.11
   lottie: ^3.2.0
+  flutter_svg: ^2.1.0
 
 dev_dependencies:
   flutter_test:
@@ -38,6 +39,8 @@ flutter:
   assets:
     - assets/translations/
     - assets/animations/
+    - assets/images/
+    - assets/config.json
 
 fonts:
     - family: Comfortaa

@@ -3,6 +3,7 @@ import 'package:how_to_cook/common/app_colors.dart';
 import 'package:how_to_cook/extensions/context_extension.dart';
 import 'package:how_to_cook/models/tab.dart';
 import 'package:how_to_cook/widgets/pages/home/home_screen.dart';
+import 'package:how_to_cook/widgets/pages/more/more_screen.dart';
 import 'package:how_to_cook/widgets/pages/products_cart/products_cart_screen.dart';
 import 'package:how_to_cook/widgets/pages/saved_meals/saved_meals_screen.dart';
 import 'package:how_to_cook/widgets/pages/search/search_screen.dart';
@@ -23,6 +24,7 @@ class _MainPageState extends State<MainPage> {
     TabData(icon: Icons.search, widget: const SearchScreen()),
     TabData(icon: Icons.bookmark_rounded, widget: const SavedMealsScreen()),
     TabData(icon: Icons.shopping_cart_rounded, widget: const ProductsCartScreen()),
+    TabData(icon: Icons.more_horiz_rounded, widget: const MoreScreen()),
   ];
 
   @override

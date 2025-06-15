@@ -38,8 +38,8 @@ class HomeCubit extends Cubit<HomeState> {
     emit(state.copyWith(isLoading: showLoader));
 
     final [meal, category, history] = await Future.wait([
-      _mealOfDayManager.getMealOfDay(locale),
-      _mealOfDayManager.getCategoryOfDay(locale),
+      _mealOfDayManager.getMealOfDay(),
+      _mealOfDayManager.getCategoryOfDay(),
       _historyManager.getHistory(),
     ]);
 
