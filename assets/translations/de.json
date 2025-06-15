@@ -26,5 +26,11 @@
   "RecentlyViewed": "Kürzlich angesehen",
   "ReadMore": "Weiterlesen",
   "ReadLess": "Weniger lesen",
-  "AddedToCart": "In den Warenkorb gelegt"
+  "AddedToCart": "In den Warenkorb gelegt",
+  "ChangeLanguage": "Sprache ändern",
+  "DevelopedBy": "Entwickelt von Ihor Piatukha\nContact Developer",
+  "English": "Englisch",
+  "German": "Deut",
+  "Ukrainian": "Ukrainisch",
+  "BrowserOpenFail": "Link konnte nicht geöffnet werden. Es ist in die Zwischenablage kopiert"
 }

@@ -20,15 +20,14 @@ class SearchCubit extends Cubit<SearchState> {
       final injector = Injector.appInstance;
       mealManager = injector.get<MealManager>();
 
-      final [areas, categories] = await Future.wait([
-        mealManager.getAllAreas(),
-        mealManager.getAllCategories(),
-      ]);
+      final categories = await mealManager.getAllCategories();
+      await Future.delayed(Durations.medium1);
+      final areas = await mealManager.getAllAreas();
 
       emit(state.copyWith(
         isLoading: false,
-        areas: areas as List<Area>,
-        categories: categories as List<Category>,
+        areas: areas,
+        categories: categories,
       ));
     } catch (error) {
       emit(state.copyWith(error: error.toString()));

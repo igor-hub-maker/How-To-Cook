@@ -13,14 +13,15 @@ class AnimatedIndexedStack extends StatefulWidget {
 class _AnimatedIndexedStackState extends State<AnimatedIndexedStack> with TickerProviderStateMixin {
   late final AnimationController animationController;
   late final Animation<double> animation;
+  late final PageController pageController = PageController(initialPage: widget.index);
+
+  // late int _index;
+
   bool isAnimatingOut = false;
   bool isAnimatingForward = true;
-  late int _index;
 
   @override
   void initState() {
-    _index = widget.index;
-
     animationController = AnimationController(
       duration: const Duration(milliseconds: 150),
       vsync: this,
@@ -45,7 +46,7 @@ class _AnimatedIndexedStackState extends State<AnimatedIndexedStack> with Ticker
         });
 
         animationController.forward(from: 0);
-        _index = widget.index;
+        pageController.jumpToPage(widget.index);
         super.didUpdateWidget(oldWidget);
       });
       return;
@@ -71,8 +72,9 @@ class _AnimatedIndexedStackState extends State<AnimatedIndexedStack> with Ticker
       child: FadeTransition(
         opacity: Tween(begin: isAnimatingOut ? 0.8 : 0.0, end: isAnimatingOut ? 0.0 : 1.0)
             .animate(animation),
-        child: IndexedStack(
-          index: _index,
+        child: PageView(
+          physics: const NeverScrollableScrollPhysics(),
+          controller: pageController,
           children: widget.children,
         ),
       ),

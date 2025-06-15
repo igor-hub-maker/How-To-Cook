@@ -42,7 +42,13 @@ class CodegenLoader extends AssetLoader{
   "RecentlyViewed": "Kürzlich angesehen",
   "ReadMore": "Weiterlesen",
   "ReadLess": "Weniger lesen",
-  "AddedToCart": "In den Warenkorb gelegt"
+  "AddedToCart": "In den Warenkorb gelegt",
+  "ChangeLanguage": "Sprache ändern",
+  "DevelopedBy": "Entwickelt von Ihor Piatukha\nContact Developer",
+  "English": "Englisch",
+  "German": "Deut",
+  "Ukrainian": "Ukrainisch",
+  "BrowserOpenFail": "Link konnte nicht geöffnet werden. Es ist in die Zwischenablage kopiert"
 };
 static const Map<String,dynamic> uk = {
   "MainPageTitle": "Що приготуємо сьогодні?",
@@ -72,7 +78,13 @@ static const Map<String,dynamic> uk = {
   "RecentlyViewed": "Нещодавно переглянуті",
   "ReadMore": "Розгорнути",
   "ReadLess": " Згорнути",
-  "AddedToCart": "Додано до кошику"
+  "AddedToCart": "Додано до кошику",
+  "ChangeLanguage": " Змінити мову",
+  "DevelopedBy": "Розроблено Ihor Piatukha\nЗвʼязатися з розробником",
+  "English": "Анлійська",
+  "German": "Німецька",
+  "Ukrainian": "Українська",
+  "BrowserOpenFail": "Невдалося відкрити посилання. Воно скопійовано до буфера обміну"
 };
 static const Map<String,dynamic> en = {
   "MainPageTitle": "What will we cook today?",
@@ -102,7 +114,13 @@ static const Map<String,dynamic> en = {
   "RecentlyViewed": "Recently viewed",
   "ReadMore": "Read more",
   "ReadLess": "Read less",
-  "AddedToCart": "Added to cart"
+  "AddedToCart": "Added to cart",
+  "ChangeLanguage": "Change language",
+  "DevelopedBy": "Developed by Ihor Piatukha\nContact Developer",
+  "English": "English",
+  "German": "German",
+  "Ukrainian": "Ukrainian",
+  "BrowserOpenFail": "Can not open link. Link copied to clipboard"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"de": de, "uk": uk, "en": en};
 }

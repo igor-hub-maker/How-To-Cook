@@ -26,5 +26,11 @@
   "RecentlyViewed": "Recently viewed",
   "ReadMore": "Read more",
   "ReadLess": "Read less",
-  "AddedToCart": "Added to cart"
+  "AddedToCart": "Added to cart",
+  "ChangeLanguage": "Change language",
+  "DevelopedBy": "Developed by Ihor Piatukha\nContact Developer",
+  "English": "English",
+  "German": "German",
+  "Ukrainian": "Ukrainian",
+  "BrowserOpenFail": "Can not open link. Link copied to clipboard"
 }

@@ -26,5 +26,11 @@
   "RecentlyViewed": "Нещодавно переглянуті",
   "ReadMore": "Розгорнути",
   "ReadLess": " Згорнути",
-  "AddedToCart": "Додано до кошику"
+  "AddedToCart": "Додано до кошику",
+  "ChangeLanguage": " Змінити мову",
+  "DevelopedBy": "Розроблено Ihor Piatukha\nЗвʼязатися з розробником",
+  "English": "Анлійська",
+  "German": "Німецька",
+  "Ukrainian": "Українська",
+  "BrowserOpenFail": "Невдалося відкрити посилання. Воно скопійовано до буфера обміну"
 }

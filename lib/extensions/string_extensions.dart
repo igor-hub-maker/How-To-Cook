@@ -16,7 +16,7 @@ extension StringExtensions on String {
       input = parts.first;
     }
 
-    final regex = RegExp(r'^([\d\s\/\.]+)\s*([a-zA-Z]+.*)?$');
+    final regex = RegExp(r'^([\d\s\/\.]+)\s*([\p{L}]+.*)?$', unicode: true);
     final match = regex.firstMatch(input);
 
     if (match == null) {

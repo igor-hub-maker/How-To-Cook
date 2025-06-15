@@ -22,7 +22,8 @@ class ProductsCartScreen extends StatefulWidget {
   _ProductsCartScreenState createState() => _ProductsCartScreenState();
 }
 
-class _ProductsCartScreenState extends State<ProductsCartScreen> {
+class _ProductsCartScreenState extends State<ProductsCartScreen>
+    with AutomaticKeepAliveClientMixin {
   final screenCubit = ProductsCartCubit();
 
   String filter = "";
@@ -35,6 +36,8 @@ class _ProductsCartScreenState extends State<ProductsCartScreen> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     return FocusDetector(
       onFocusGained: () {
         if (!screenCubit.state.isLoading) {
@@ -180,4 +183,7 @@ class _ProductsCartScreenState extends State<ProductsCartScreen> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

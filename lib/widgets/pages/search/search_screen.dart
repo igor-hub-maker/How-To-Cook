@@ -21,7 +21,8 @@ class SearchScreen extends StatefulWidget {
   _SearchScreenState createState() => _SearchScreenState();
 }
 
-class _SearchScreenState extends State<SearchScreen> with TickerProviderStateMixin {
+class _SearchScreenState extends State<SearchScreen>
+    with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   final screenCubit = SearchCubit();
   // final searchController = TextEditingController();
 
@@ -46,6 +47,8 @@ class _SearchScreenState extends State<SearchScreen> with TickerProviderStateMix
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     return FocusDetector(
       onFocusGained: () {
         final newLocale = context.locale.toString();
@@ -205,4 +208,7 @@ class _SearchScreenState extends State<SearchScreen> with TickerProviderStateMix
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

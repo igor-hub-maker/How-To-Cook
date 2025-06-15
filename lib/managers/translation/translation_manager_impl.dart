@@ -29,10 +29,12 @@ class TranslationManagerImpl implements TranslationManager {
         HeadersConstants.contentType: Formats.headerJson,
         HeadersConstants.authorization: 'DeepL-Auth-Key ${EnvironmentConstants.DeepLKey}',
       },
-      body: {
-        BodyParameters.text: text,
-        BodyParameters.targetLanguage: targetLanguage,
-      },
+      body: jsonEncode(
+        {
+          BodyParameters.text: text,
+          BodyParameters.targetLanguage: targetLanguage,
+        },
+      ),
     );
 
     if (response.statusCode != 200) {
@@ -42,11 +44,12 @@ class TranslationManagerImpl implements TranslationManager {
         gravity: ToastGravity.BOTTOM,
       );
 
-      log('Failed to translate text: ${response.statusCode} ${response.reasonPhrase}');
+      log('Failed to translate text: ${response.statusCode} ${response.reasonPhrase}, ${response.body}');
       return [];
     }
 
-    final json = List.from(jsonDecode(response.body)[BodyParameters.translations]);
+    final decodedBody = utf8.decode(response.bodyBytes);
+    final json = List.from(jsonDecode(decodedBody)[BodyParameters.translations]);
 
     final result = json.map((e) => e[BodyParameters.text] as String).toList();
 

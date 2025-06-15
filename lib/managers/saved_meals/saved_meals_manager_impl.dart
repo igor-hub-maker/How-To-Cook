@@ -1,12 +1,15 @@
 import 'package:how_to_cook/common/local_db_constants.dart';
 import 'package:how_to_cook/common/rest/body_parameters.dart';
+import 'package:how_to_cook/managers/meal/meal_manager.dart';
 import 'package:how_to_cook/managers/saved_meals/saved_meals_manager.dart';
 import 'package:how_to_cook/models/meal.dart';
 import 'package:how_to_cook/services/local_db/local_db_service.dart';
 import 'package:injector/injector.dart';
 
 class SavedMealsManagerImpl implements SavedMealsManager {
-  final LocalDbService localDbService = Injector.appInstance.get<LocalDbService>();
+  final injector = Injector.appInstance;
+  late final LocalDbService localDbService = injector.get<LocalDbService>();
+  late final MealManager mealManager = injector.get<MealManager>();
 
   @override
   Future<void> saveMeal(Meal meal) async {
@@ -15,7 +18,12 @@ class SavedMealsManagerImpl implements SavedMealsManager {
       return Future.value();
     }
 
-    await localDbService.db.insert(LocalDbConstants.SavedMeals, meal.toJson());
+    await mealManager.saveMealToLocalIfNeeded(meal);
+
+    await localDbService.db.insert(LocalDbConstants.SavedMeals, {
+      BodyParameters.idMeal: meal.id,
+      BodyParameters.strMeal: meal.name,
+    });
   }
 
   @override
@@ -33,7 +41,10 @@ class SavedMealsManagerImpl implements SavedMealsManager {
       LocalDbConstants.SavedMeals,
     );
 
-    return json.map((e) => Meal.fromJson(e)).toList();
+    final mealIds = json.map((e) => e[BodyParameters.idMeal].toString()).toList();
+    final meals = await mealManager.getMealsFromLocal(mealIds);
+
+    return meals;
   }
 
   @override
