@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:how_to_cook/generated/locale_keys.g.dart';
 import 'package:how_to_cook/managers/history/history_manager.dart';
 import 'package:how_to_cook/managers/meal/meal_manager.dart';
 import 'package:how_to_cook/managers/products_cart/products_cart_manager.dart';
@@ -44,7 +46,7 @@ class MealDetailsCubit extends Cubit<MealDetailsState> {
 
   Future<void> addProductsToCart() async {
     await productsCartManager.addOrUpdateToCartFromMealIngredientMany(state.meal!.ingredients);
-    Fluttertoast.showToast(msg: "Added to cart", toastLength: Toast.LENGTH_LONG);
+    Fluttertoast.showToast(msg: LocaleKeys.AddedToCart.tr(), toastLength: Toast.LENGTH_LONG);
   }
 
   Future<void> saveMeal() async {

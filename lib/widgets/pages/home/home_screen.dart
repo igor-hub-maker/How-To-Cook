@@ -4,18 +4,13 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:focus_detector/focus_detector.dart';
-import 'package:how_to_cook/common/animations.dart';
-import 'package:how_to_cook/common/app_colors.dart';
-import 'package:how_to_cook/common/enums/meal_filtering_type.dart';
 import 'package:how_to_cook/common/fonts.dart';
 import 'package:how_to_cook/generated/locale_keys.g.dart';
-import 'package:how_to_cook/widgets/pages/filtered_meals/filtered_meals_screen.dart';
 import 'package:how_to_cook/widgets/pages/home/home_cubit.dart';
 import 'package:how_to_cook/widgets/pages/home/home_state.dart';
 import 'package:how_to_cook/widgets/views/%20category_item_view.dart';
 import 'package:how_to_cook/widgets/views/loading_indicator.dart';
 import 'package:how_to_cook/widgets/views/meal_item_view.dart';
-import 'package:lottie/lottie.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -119,9 +114,9 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           const SizedBox(height: 20),
           if (state.history != null && state.history!.isNotEmpty) ...[
-            const Text(
-              "Нещодавно переглянуті",
-              style: TextStyle(
+            Text(
+              LocaleKeys.RecentlyViewed.tr(),
+              style: const TextStyle(
                 fontFamily: Fonts.Comfortaa,
                 fontWeight: FontWeight.w700,
                 fontSize: 24,

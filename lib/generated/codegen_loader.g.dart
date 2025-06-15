@@ -23,7 +23,26 @@ class CodegenLoader extends AssetLoader{
     "few": "{} Zutaten",
     "many": "{} Zutaten",
     "other": "{} Zutaten"
-  }
+  },
+  "YourDayRecipe": "Dein Rezept des Tages",
+  "YourDayCategory": "Dein Kategorie des Tages",
+  "Search": "Suchen",
+  "NoDataAvailable": "Keine Daten verfügbar",
+  "Category": "Kategorie",
+  "Area": "Späyzialitet",
+  "SavedMeals": "Gespeicherte Mahlzeiten",
+  "NoSavedMealsAvailable": "Keine gesparten Mahlzeiten verfügbar",
+  "ProductsCart": "Produkte Warenkorb",
+  "NoProductsInTheCart": "Keine Produkte im Warenkorb",
+  "DeleteSelectedItemsMessage": "Sind Sie sicher, dass Sie alle ausgewählten Elemente löschen möchten?",
+  "Cancel": "Abbrechen",
+  "Delete": "Löschen",
+  "Products": "Produkte",
+  "WatchVideo": "Video ansehen",
+  "RecentlyViewed": "Kürzlich angesehen",
+  "ReadMore": "Weiterlesen",
+  "ReadLess": "Weniger lesen",
+  "AddedToCart": "In den Warenkorb gelegt"
 };
 static const Map<String,dynamic> uk = {
   "MainPageTitle": "Що приготуємо сьогодні?",
@@ -34,7 +53,26 @@ static const Map<String,dynamic> uk = {
     "few": "{} Інгредієнтів",
     "many": "{} Інгредієнтів",
     "other": "{} Інгредієнтів"
-  }
+  },
+  "YourDayRecipe": "Твій рецепт дня",
+  "YourDayCategory": "Твоя категорія дня",
+  "Search": "Пошук",
+  "NoDataAvailable": "Немає даних",
+  "Category": "Категорія",
+  "Area": "Країна",
+  "SavedMeals": "Збережені страви",
+  "NoSavedMealsAvailable": "Немає збережених страв",
+  "ProductsCart": "Корзина продуктів",
+  "NoProductsInTheCart": "Немає продуктів в кошику",
+  "DeleteSelectedItemsMessage": "Ви впевнені, що хочете видалити всі обані елементи?",
+  "Cancel": "Відміна",
+  "Delete": "Видалити",
+  "Products": "Інгрідієнтів",
+  "WatchVideo": "Подивитися відео",
+  "RecentlyViewed": "Нещодавно переглянуті",
+  "ReadMore": "Розгорнути",
+  "ReadLess": " Згорнути",
+  "AddedToCart": "Додано до кошику"
 };
 static const Map<String,dynamic> en = {
   "MainPageTitle": "What will we cook today?",
@@ -45,7 +83,26 @@ static const Map<String,dynamic> en = {
     "few": "{} Ingredients",
     "many": "{} Ingredients",
     "other": "{} Ingredients"
-  }
+  },
+  "YourDayRecipe": "Your recipe of the day",
+  "YourDayCategory": "Your category of the day",
+  "Search": "Search",
+  "NoDataAvailable": "No data available",
+  "Category": "Category",
+  "Area": "Area",
+  "SavedMeals": "Saved Meals",
+  "NoSavedMealsAvailable": "No saved meals available",
+  "ProductsCart": "Products Cart",
+  "NoProductsInTheCart": "No products in the cart",
+  "DeleteSelectedItemsMessage": "Are you sure you want to delete all selected items?",
+  "Cancel": "Cancel",
+  "Delete": "Delete",
+  "Products": "Products",
+  "WatchVideo": "Watch video",
+  "RecentlyViewed": "Recently viewed",
+  "ReadMore": "Read more",
+  "ReadLess": "Read less",
+  "AddedToCart": "Added to cart"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"de": de, "uk": uk, "en": en};
 }

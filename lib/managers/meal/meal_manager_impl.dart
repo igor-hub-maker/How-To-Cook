@@ -1,145 +1,161 @@
 import 'dart:math';
 
+import 'package:how_to_cook/common/constants.dart';
 import 'package:how_to_cook/common/enums/meal_filtering_type.dart';
-import 'package:how_to_cook/common/locale_constants.dart';
 import 'package:how_to_cook/common/rest/api_constants.dart';
 import 'package:how_to_cook/common/rest/body_parameters.dart';
 import 'package:how_to_cook/common/rest/query_parameters.dart';
 import 'package:how_to_cook/extensions/meal_filtering_type_extension.dart';
 import 'package:how_to_cook/managers/meal/meal_manager.dart';
+import 'package:how_to_cook/managers/translation/translation_manager.dart';
 import 'package:how_to_cook/models/area.dart';
 import 'package:how_to_cook/models/category.dart';
-import 'package:how_to_cook/models/ingredient.dart';
 import 'package:how_to_cook/models/meal.dart';
+import 'package:how_to_cook/models/meal_ingredient.dart';
 import 'package:how_to_cook/models/meal_short.dart';
 import 'package:how_to_cook/services/meal_db/meal_db_service.dart';
 import 'package:injector/injector.dart';
-import 'package:translator/translator.dart';
 
 class MealManagerImpl implements MealManager {
-  late final MealDbService _mealDbService = Injector.appInstance.get<MealDbService>();
+  final injector = Injector.appInstance;
+  late final MealDbService _mealDbService = injector.get<MealDbService>();
+  late final TranslationManager translationManager = injector.get<TranslationManager>();
 
   @override
-  Future<Meal> getRandomMeal([String? locale]) async {
+  Future<Meal> getRandomMeal() async {
+    final locale = Constants.currentLocale;
+
     final json = await _mealDbService.getRequestByPath(ApiConstants.randomMeal);
 
     var mealJson = json[BodyParameters.meals][0];
 
-    if (locale != null) {
-      mealJson = await translateMeal(mealJson, locale);
+    var meal = Meal.fromJson(mealJson);
+
+    if (locale.isNotEmpty && locale != Constants.en) {
+      meal = await translateMeal(mealJson, locale);
     }
 
-    return Meal.fromJson(mealJson);
+    return meal;
   }
 
-  Future<dynamic> translateMeal(dynamic mealJson, String locale) async {
-    final translator = GoogleTranslator();
+  Future<Meal> translateMeal(Meal meal, String locale) async {
     final futures = <Future>[];
 
-    futures.add(
-      translator.translate(mealJson[BodyParameters.strMeal], to: locale).then(
-            (result) => mealJson[BodyParameters.strMeal] = result.text,
-          ),
-    );
+    if (meal.category.isNotEmpty) {
+      futures.add(translationManager.translate(meal.category, locale).then((value) {
+        meal.category = value;
+      }));
+    }
 
-    futures.add(
-      translator.translate(mealJson[BodyParameters.strInstructions], to: locale).then(
-            (result) => mealJson[BodyParameters.strInstructions] = result.text,
-          ),
-    );
-
-    if (mealJson[BodyParameters.strArea] != null) {
+    if (meal.tags?.isNotEmpty ?? false) {
       futures.add(
-        translator.translate(mealJson[BodyParameters.strCategory], to: locale).then(
-              (result) => mealJson[BodyParameters.strCategory] = result.text,
-            ),
+        translationManager.translateMany(meal.tags!, locale).then((value) {
+          meal.tags = value;
+        }),
       );
     }
 
-    if (mealJson[BodyParameters.strTags] != null) {
-      futures.add(
-        translator.translate(mealJson[BodyParameters.strTags], to: locale).then(
-              (result) => mealJson[BodyParameters.strTags] = result.text,
-            ),
-      );
-    }
+    futures.add(translationManager.translate(meal.instructions, locale).then((value) {
+      meal.instructions = value;
+    }));
+
+    futures.add(
+      () async {
+        final ingredientsToTranslate = meal.ingredients
+            .map((ingredient) => "${ingredient.name},${ingredient.measure}")
+            .toList();
+        final translatedIngredients =
+            await translationManager.translateMany(ingredientsToTranslate, locale);
+        meal.ingredients = translatedIngredients.map((e) {
+          final parts = e.split(',');
+          return MealIngredient(
+            name: parts[0],
+            measure: parts[1],
+          );
+        }).toList();
+      }(),
+    );
 
     await Future.wait(futures);
-    return mealJson;
+    return meal;
   }
 
   @override
-  Future<Category> getRandomCategory([String? locale]) async {
-    final categories = await getAllCategories(locale);
+  Future<Category> getRandomCategory() async {
+    final categories = await getAllCategories();
     return categories[Random().nextInt(categories.length)];
   }
 
   @override
-  Future<List<Category>> getAllCategories([String? locale]) async {
+  Future<List<Category>> getAllCategories() async {
+    final locale = Constants.currentLocale;
     final json = await _mealDbService.getRequestByPath(ApiConstants.allCategories);
     final categoriesJson = List.from(json[BodyParameters.categories]);
 
-    final categories = List<Category>.empty(growable: true);
-    for (final categoryJson in categoriesJson) {
+    final categories = categoriesJson.map((categoryJson) {
       categoryJson[BodyParameters.strCategoryOriginal] = categoryJson[BodyParameters.strCategory];
+      return Category.fromJson(categoryJson);
+    }).toList();
 
-      if (locale != null) {
-        categories.add(Category.fromJson(await translateCategory(categoryJson, locale)));
-      } else {
-        categories.add(Category.fromJson(categoryJson));
-      }
+    if (locale.isNotEmpty && locale != Constants.en) {
+      final futures = categories.map((category) => translateCategory(category, locale)).toList();
+      return Future.wait(futures);
     }
 
     return categories;
   }
 
-  Future<dynamic> translateCategory(dynamic categoryJson, String locale) async {
-    final translator = GoogleTranslator();
-    categoryJson[BodyParameters.strCategory] = (await translator.translate(
-      categoryJson[BodyParameters.strCategory],
-      to: locale,
-    ))
-        .text;
+  Future<Category> translateCategory(Category category, String locale) async {
+    final futures = <Future>[];
+    futures.add(
+      translationManager.translate(category.name, locale).then((value) {
+        category.name = value;
+      }),
+    );
 
-    categoryJson[BodyParameters.strCategoryDescription] = (await translator.translate(
-      categoryJson[BodyParameters.strCategoryDescription],
-      to: locale,
-    ))
-        .text;
+    if (category.description.isNotEmpty) {
+      futures.add(
+        translationManager.translate(category.description, locale).then((value) {
+          category.description = value;
+        }),
+      );
+    }
 
-    return categoryJson;
+    return category;
   }
 
   @override
-  Future<List<Area>> getAllAreas([String? locale]) async {
-    final translator = GoogleTranslator();
+  Future<List<Area>> getAllAreas() async {
+    final locale = Constants.currentLocale;
 
     final json =
         await _mealDbService.getRequestByPath(ApiConstants.list, {QueryParameters.a: "list"});
     final areas = List<Area>.empty(growable: true);
-    if (locale != null && locale != LocaleConstants.en) {
-      final areasFutures = List.from(json[BodyParameters.meals]).map((json) async {
-        final name = json[BodyParameters.strArea];
-        final translation = await translator.translate(
-          name,
-          to: locale,
-        );
 
-        final translatedText = locale == LocaleConstants.ua
-            ? translation.text.replaceAll("кий", "ка")
-            : translation.text;
+    final areasString = List.from(json[BodyParameters.meals]);
 
-        return Area(name: name, localizedName: translatedText);
-      }).toList();
-
-      final translatedAreas = await Future.wait(areasFutures);
-      areas.addAll(translatedAreas);
+    if (locale.isNotEmpty && locale != Constants.en) {
+      final futures = areasString.map(
+        (area) {
+          return translationManager.translate(area[BodyParameters.strArea], locale).then(
+            (value) {
+              areas.add(
+                Area(
+                  name: value,
+                  localizedName: area[BodyParameters.strArea],
+                ),
+              );
+            },
+          );
+        },
+      ).toList();
+      await Future.wait(futures);
     } else {
       areas.addAll(
-        List.from(json[BodyParameters.meals]).map(
-          (json) => Area(
-            name: json[BodyParameters.strArea],
-            localizedName: json[BodyParameters.strArea],
+        areasString.map(
+          (area) => Area(
+            name: area[BodyParameters.strArea],
+            localizedName: area[BodyParameters.strArea],
           ),
         ),
       );
@@ -149,50 +165,47 @@ class MealManagerImpl implements MealManager {
   }
 
   @override
-  Future<List<Ingredient>> getAllIngredients([String? locale]) async {
-    final json =
-        await _mealDbService.getRequestByPath(ApiConstants.list, {QueryParameters.i: "list"});
+  Future<List<MealShort>> getMealsByFilter(
+    String filter,
+    MealFilteringType mealFilteringType,
+  ) async {
+    final locale = Constants.currentLocale;
 
-    final ingredients = List.from(json[BodyParameters.meals])
-        .map(
-          (json) => Ingredient.fromJson(json),
-        )
-        .toList();
-    return ingredients;
-  }
-
-  @override
-  Future<List<MealShort>> getMealsByFilter(String filter, MealFilteringType mealFilteringType,
-      [String? locale]) async {
     final json = await _mealDbService
         .getRequestByPath(ApiConstants.filter, {mealFilteringType.filterQueryParameter: filter});
 
     var mealsJson = List.from(json[BodyParameters.meals]);
 
-    final result = List<MealShort>.empty(growable: true);
+    final result = mealsJson.map((e) => MealShort.fromJson(Map<String, dynamic>.from(e)));
 
-    for (var mealJson in mealsJson) {
-      if (locale != null) {
-        mealJson = await translateMeal(mealJson, locale);
-      }
+    if (locale.isNotEmpty && locale != Constants.en) {
+      final futures = result.map((mealShort) async {
+        mealShort.name = await translationManager.translate(mealShort.name, locale);
+        return mealShort;
+      }).toList();
 
-      result.add(MealShort.fromJson(mealJson));
+      return Future.wait(futures);
     }
 
-    return result;
+    return result.toList();
   }
 
   @override
-  Future<Meal> getMealDetails(String mealId, [String? locale]) async {
+  Future<Meal> getMealDetails(
+    String mealId,
+  ) async {
+    final locale = Constants.currentLocale;
+
     final json =
         await _mealDbService.getRequestByPath(ApiConstants.lookup, {QueryParameters.i: mealId});
 
     var mealJson = json[BodyParameters.meals][0];
+    var meal = Meal.fromJson(mealJson);
 
-    if (locale != null) {
-      mealJson = await translateMeal(mealJson, locale);
+    if (locale.isNotEmpty && locale != Constants.en) {
+      meal = await translateMeal(meal, locale);
     }
 
-    return Meal.fromJson(mealJson);
+    return meal;
   }
 }

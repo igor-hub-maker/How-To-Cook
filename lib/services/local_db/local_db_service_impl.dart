@@ -14,7 +14,7 @@ class LocalDbServiceImpl implements LocalDbService {
 
     _db = await openDatabase(
       "$dbPath/${LocalDbConstants.dbName}",
-      version: 2,
+      version: 1,
       onCreate: (db, version) async {
         await db.execute(LocalDbConstants.createMealsHistoryTableCommand);
         await db.execute(LocalDbConstants.createProductsCartTableCommand);

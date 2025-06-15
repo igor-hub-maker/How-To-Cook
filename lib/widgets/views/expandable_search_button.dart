@@ -1,7 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:how_to_cook/common/app_colors.dart';
 import 'package:how_to_cook/common/fonts.dart';
 import 'package:how_to_cook/extensions/context_extension.dart';
+import 'package:how_to_cook/generated/locale_keys.g.dart';
+import 'package:how_to_cook/widgets/views/empty_state_view.dart';
 
 class ExpandableSearchButton extends StatefulWidget {
   const ExpandableSearchButton({super.key, required this.onChanged});
@@ -33,8 +36,11 @@ class _ExpandableSearchButtonState extends State<ExpandableSearchButton> {
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
-      duration: const Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 450),
       width: isSearchExpanded ? context.screenWidth - 40 : 48,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(100),
+      ),
       child: Stack(
         alignment: Alignment.centerRight,
         children: [
@@ -46,7 +52,7 @@ class _ExpandableSearchButtonState extends State<ExpandableSearchButton> {
               filled: true,
               contentPadding: const EdgeInsets.only(left: 16),
               constraints: const BoxConstraints(maxHeight: 48),
-              hintText: "Search",
+              hintText: LocaleKeys.Search.tr(),
               hintStyle: const TextStyle(
                 fontFamily: Fonts.Comfortaa,
                 fontSize: 16,

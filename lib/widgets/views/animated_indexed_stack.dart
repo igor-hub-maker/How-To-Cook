@@ -14,6 +14,7 @@ class _AnimatedIndexedStackState extends State<AnimatedIndexedStack> with Ticker
   late final AnimationController animationController;
   late final Animation<double> animation;
   bool isAnimatingOut = false;
+  bool isAnimatingForward = true;
   late int _index;
 
   @override
@@ -21,7 +22,7 @@ class _AnimatedIndexedStackState extends State<AnimatedIndexedStack> with Ticker
     _index = widget.index;
 
     animationController = AnimationController(
-      duration: const Duration(milliseconds: 60),
+      duration: const Duration(milliseconds: 150),
       vsync: this,
     );
     animation = CurvedAnimation(parent: animationController, curve: Curves.easeOutQuad);
@@ -35,6 +36,7 @@ class _AnimatedIndexedStackState extends State<AnimatedIndexedStack> with Ticker
     if (oldWidget.index != widget.index) {
       setState(() {
         isAnimatingOut = true;
+        isAnimatingForward = widget.index > oldWidget.index;
       });
 
       animationController.forward(from: 0).then((_) {
@@ -53,9 +55,19 @@ class _AnimatedIndexedStackState extends State<AnimatedIndexedStack> with Ticker
 
   @override
   Widget build(BuildContext context) {
-    return ScaleTransition(
-      scale: Tween(begin: isAnimatingOut ? 1.0 : 0.9, end: isAnimatingOut ? 1.1 : 1.0)
-          .animate(animation),
+    return SlideTransition(
+      position: Tween<Offset>(
+        begin: isAnimatingOut
+            ? const Offset(0, 0)
+            : isAnimatingForward
+                ? const Offset(0.6, 0)
+                : const Offset(-0.6, 0),
+        end: isAnimatingOut
+            ? isAnimatingForward
+                ? const Offset(-0.6, 0)
+                : const Offset(0.6, 0)
+            : const Offset(0, 0),
+      ).animate(animation),
       child: FadeTransition(
         opacity: Tween(begin: isAnimatingOut ? 0.8 : 0.0, end: isAnimatingOut ? 0.0 : 1.0)
             .animate(animation),

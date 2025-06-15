@@ -1,7 +1,5 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:how_to_cook/main.dart';
 import 'package:how_to_cook/managers/meal/meal_manager.dart';
 import 'package:how_to_cook/models/area.dart';
 import 'package:how_to_cook/models/category.dart';
@@ -23,8 +21,8 @@ class SearchCubit extends Cubit<SearchState> {
       mealManager = injector.get<MealManager>();
 
       final [areas, categories] = await Future.wait([
-        mealManager.getAllAreas(context.locale.toString()),
-        mealManager.getAllCategories(context.locale.toString()),
+        mealManager.getAllAreas(),
+        mealManager.getAllCategories(),
       ]);
 
       emit(state.copyWith(

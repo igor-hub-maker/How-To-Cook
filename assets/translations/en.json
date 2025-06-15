@@ -9,5 +9,22 @@
     "other": "{} Ingredients"
   },
   "YourDayRecipe": "Your recipe of the day",
-  "YourDayCategory": "Your category of the day"
+  "YourDayCategory": "Your category of the day",
+  "Search": "Search",
+  "NoDataAvailable": "No data available",
+  "Category": "Category",
+  "Area": "Area",
+  "SavedMeals": "Saved Meals",
+  "NoSavedMealsAvailable": "No saved meals available",
+  "ProductsCart": "Products Cart",
+  "NoProductsInTheCart": "No products in the cart",
+  "DeleteSelectedItemsMessage": "Are you sure you want to delete all selected items?",
+  "Cancel": "Cancel",
+  "Delete": "Delete",
+  "Products": "Products",
+  "WatchVideo": "Watch video",
+  "RecentlyViewed": "Recently viewed",
+  "ReadMore": "Read more",
+  "ReadLess": "Read less",
+  "AddedToCart": "Added to cart"
 }
