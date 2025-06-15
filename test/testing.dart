@@ -1,10 +1,10 @@
+import 'package:flutter_test/flutter_test.dart';
 import 'package:how_to_cook/IoC/composition_root.dart';
 import 'package:how_to_cook/common/rest/api_constants.dart';
 import 'package:how_to_cook/services/local_db/local_db_service.dart';
 import 'package:how_to_cook/services/meal_db/meal_db_service.dart';
 import 'package:how_to_cook/services/shared_preferences/shared_preferences_service.dart';
 import 'package:injector/injector.dart';
-import 'package:test/test.dart';
 
 void main() {
   CompositionRoot.initialize();
