@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:how_to_cook/common/app_colors.dart';
@@ -12,11 +13,9 @@ class MealItemView extends StatelessWidget {
   const MealItemView({
     super.key,
     required this.meal,
-    this.onTap,
   });
 
   final MealShort meal;
-  final Future<Meal> Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -28,27 +27,14 @@ class MealItemView extends StatelessWidget {
             .firstOrNull
         : null;
 
-    return GestureDetector(
-      onTap: () async {
-        var mealToShow = mealDetailed;
-        if (mealToShow == null) {
-          if (onTap == null) {
-            throw Exception("onTap and mealDetailed is null");
-          }
-
-          mealToShow = await onTap!();
-        }
-
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => MealDetailsScreen(
-              meal: mealToShow!,
-            ),
-          ),
-        );
-      },
-      child: Container(
+    return OpenContainer(
+      closedElevation: 0,
+      openElevation: 0,
+      closedColor: Colors.transparent,
+      openBuilder: (context, action) => MealDetailsScreen(
+        meal: mealDetailed ?? meal,
+      ),
+      closedBuilder: (context, action) => Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           image: DecorationImage(

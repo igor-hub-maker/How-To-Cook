@@ -1,10 +1,12 @@
 import 'dart:developer';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:how_to_cook/common/app_colors.dart';
 import 'package:how_to_cook/common/fonts.dart';
+import 'package:how_to_cook/generated/locale_keys.g.dart';
 import 'package:how_to_cook/models/meal.dart';
 import 'package:how_to_cook/widgets/pages/saved_meals/saved_meals_cubit.dart';
 import 'package:how_to_cook/widgets/pages/saved_meals/saved_meals_state.dart';
@@ -65,7 +67,7 @@ class _SavedMealsScreenState extends State<SavedMealsScreen> {
   PreferredSizeWidget buildAppBar() {
     return AppBar(
       centerTitle: false,
-      title: Text('Saved Meals'),
+      title: Text(LocaleKeys.SavedMeals.tr()),
       titleTextStyle: TextStyle(
         fontFamily: Fonts.Comfortaa,
         fontSize: 32,
@@ -92,8 +94,8 @@ class _SavedMealsScreenState extends State<SavedMealsScreen> {
 
   Widget buildBody(SavedMealsState state) {
     if (state.meals == null || state.meals!.isEmpty) {
-      return const EmptyStateView(
-        message: "No saved meals available",
+      return EmptyStateView(
+        message: LocaleKeys.NoSavedMealsAvailable.tr(),
       );
     }
 

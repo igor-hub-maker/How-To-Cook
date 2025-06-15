@@ -6,24 +6,20 @@ import 'package:how_to_cook/models/category.dart';
 import 'package:how_to_cook/models/meal_short.dart';
 
 abstract class MealManager {
-  Future<Meal> getRandomMeal([String? locale]);
+  Future<Meal> getRandomMeal();
 
-  Future<List<Category>> getAllCategories([String? locale]);
+  Future<List<Category>> getAllCategories();
 
-  Future<Category> getRandomCategory([String? locale]);
+  Future<Category> getRandomCategory();
 
-  Future<List<Area>> getAllAreas([String? locale]);
+  Future<List<Area>> getAllAreas();
 
-  Future<List<Ingredient>> getAllIngredients([String? locale]);
+  // TODO: Implement this method when needed
+  // Future<List<Ingredient>> getAllIngredients();
 
-  Future<Meal> getMealDetails(
-    String mealId, [
-    String? locale,
-  ]);
+  Future<Meal> getMealDetails(String mealId);
 
-  Future<List<MealShort>> getMealsByFilter(
-    String filter,
-    MealFilteringType mealFilteringType, [
-    String? locale,
-  ]);
+  Future<List<MealShort>> getMealsByFilter(String filter, MealFilteringType mealFilteringType);
+
+  Future<Meal> translateMeal(Meal meal, String locale);
 }

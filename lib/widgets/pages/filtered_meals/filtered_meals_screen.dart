@@ -1,10 +1,12 @@
 import 'dart:developer';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:how_to_cook/common/enums/meal_filtering_type.dart';
 import 'package:how_to_cook/common/fonts.dart';
+import 'package:how_to_cook/generated/locale_keys.g.dart';
 import 'package:how_to_cook/widgets/pages/filtered_meals/filtered_meals_cubit.dart';
 import 'package:how_to_cook/widgets/pages/filtered_meals/filtered_meals_state.dart';
 import 'package:how_to_cook/widgets/views/loading_indicator.dart';
@@ -81,8 +83,8 @@ class _FilteredMealsScreenState extends State<FilteredMealsScreen> {
                   fontSize: 16,
                   fontWeight: FontWeight.w400,
                 ),
-                expandText: "Read more",
-                collapseText: "Read less",
+                expandText: LocaleKeys.ReadMore.tr(),
+                collapseText: LocaleKeys.ReadLess.tr(),
                 animation: true,
                 maxLines: 3,
               ),

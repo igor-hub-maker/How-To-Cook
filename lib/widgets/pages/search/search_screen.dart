@@ -7,6 +7,7 @@ import 'package:focus_detector/focus_detector.dart';
 import 'package:how_to_cook/common/app_colors.dart';
 import 'package:how_to_cook/common/enums/meal_filtering_type.dart';
 import 'package:how_to_cook/common/fonts.dart';
+import 'package:how_to_cook/generated/locale_keys.g.dart';
 import 'package:how_to_cook/widgets/pages/filtered_meals/filtered_meals_screen.dart';
 import 'package:how_to_cook/widgets/pages/search/items/list_item_component.dart';
 import 'package:how_to_cook/widgets/pages/search/search_cubit.dart';
@@ -81,7 +82,7 @@ class _SearchScreenState extends State<SearchScreen> with TickerProviderStateMix
         size: 30,
         color: AppColors.colorScheme.onSecondary,
       ),
-      title: const Text("Пошук"),
+      title: Text(LocaleKeys.Search.tr()),
       titleTextStyle: TextStyle(
         fontFamily: Fonts.Comfortaa,
         fontSize: 32,
@@ -155,12 +156,12 @@ class _SearchScreenState extends State<SearchScreen> with TickerProviderStateMix
       // ],
       bottom: TabBar(
         controller: tabController,
-        tabs: const [
+        tabs: [
           Tab(
-            text: "Category",
+            text: LocaleKeys.Category.tr(),
           ),
           Tab(
-            text: "Area",
+            text: LocaleKeys.Area.tr(),
           ),
         ],
       ),

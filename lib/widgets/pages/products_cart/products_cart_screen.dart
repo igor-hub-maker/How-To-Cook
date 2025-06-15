@@ -1,10 +1,12 @@
 import 'dart:developer';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:how_to_cook/common/app_colors.dart';
 import 'package:how_to_cook/common/fonts.dart';
 import 'package:how_to_cook/extensions/context_extension.dart';
+import 'package:how_to_cook/generated/locale_keys.g.dart';
 import 'package:how_to_cook/models/product.dart';
 import 'package:how_to_cook/widgets/pages/products_cart/items/product_cart_item_component.dart';
 import 'package:how_to_cook/widgets/pages/products_cart/products_cart_cubit.dart';
@@ -79,7 +81,7 @@ class _ProductsCartScreenState extends State<ProductsCartScreen> {
   PreferredSizeWidget buildAppBar() {
     return AppBar(
       centerTitle: false,
-      title: Text('Products Cart'),
+      title: Text(LocaleKeys.ProductsCart.tr()),
       titleTextStyle: TextStyle(
         fontFamily: Fonts.Comfortaa,
         fontSize: 32,
@@ -104,8 +106,8 @@ class _ProductsCartScreenState extends State<ProductsCartScreen> {
 
   Widget buildBody(ProductsCartState state, bool containsSelectedItems) {
     if (state.products == null || state.products!.isEmpty) {
-      return const Center(
-        child: EmptyStateView(message: "No products in the cart"),
+      return Center(
+        child: EmptyStateView(message: LocaleKeys.NoProductsInTheCart.tr()),
       );
     }
 
@@ -161,18 +163,18 @@ class _ProductsCartScreenState extends State<ProductsCartScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text("Are you sure you want to delete all selected items?"),
+        title: Text(LocaleKeys.DeleteSelectedItemsMessage.tr()),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text("Cancel"),
+            child: Text(LocaleKeys.Cancel.tr()),
           ),
           TextButton(
             onPressed: () {
               screenCubit.clearSelected();
               Navigator.pop(context);
             },
-            child: const Text("Delete"),
+            child: Text(LocaleKeys.Delete.tr()),
           ),
         ],
       ),

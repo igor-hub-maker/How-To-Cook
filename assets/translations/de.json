@@ -9,5 +9,22 @@
     "other": "{} Zutaten"
   },
   "YourDayRecipe": "Dein Rezept des Tages",
-  "YourDayCategory": "Dein Kategorie des Tages"
+  "YourDayCategory": "Dein Kategorie des Tages",
+  "Search": "Suchen",
+  "NoDataAvailable": "Keine Daten verfügbar",
+  "Category": "Kategorie",
+  "Area": "Späyzialitet",
+  "SavedMeals": "Gespeicherte Mahlzeiten",
+  "NoSavedMealsAvailable": "Keine gesparten Mahlzeiten verfügbar",
+  "ProductsCart": "Produkte Warenkorb",
+  "NoProductsInTheCart": "Keine Produkte im Warenkorb",
+  "DeleteSelectedItemsMessage": "Sind Sie sicher, dass Sie alle ausgewählten Elemente löschen möchten?",
+  "Cancel": "Abbrechen",
+  "Delete": "Löschen",
+  "Products": "Produkte",
+  "WatchVideo": "Video ansehen",
+  "RecentlyViewed": "Kürzlich angesehen",
+  "ReadMore": "Weiterlesen",
+  "ReadLess": "Weniger lesen",
+  "AddedToCart": "In den Warenkorb gelegt"
 }

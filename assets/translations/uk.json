@@ -9,5 +9,22 @@
     "other": "{} Інгредієнтів"
   },
   "YourDayRecipe": "Твій рецепт дня",
-  "YourDayCategory": "Твоя категорія дня"
+  "YourDayCategory": "Твоя категорія дня",
+  "Search": "Пошук",
+  "NoDataAvailable": "Немає даних",
+  "Category": "Категорія",
+  "Area": "Країна",
+  "SavedMeals": "Збережені страви",
+  "NoSavedMealsAvailable": "Немає збережених страв",
+  "ProductsCart": "Корзина продуктів",
+  "NoProductsInTheCart": "Немає продуктів в кошику",
+  "DeleteSelectedItemsMessage": "Ви впевнені, що хочете видалити всі обані елементи?",
+  "Cancel": "Відміна",
+  "Delete": "Видалити",
+  "Products": "Інгрідієнтів",
+  "WatchVideo": "Подивитися відео",
+  "RecentlyViewed": "Нещодавно переглянуті",
+  "ReadMore": "Розгорнути",
+  "ReadLess": " Згорнути",
+  "AddedToCart": "Додано до кошику"
 }

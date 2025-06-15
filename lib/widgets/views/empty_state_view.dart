@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:how_to_cook/common/emojis.dart';
+import 'package:how_to_cook/generated/locale_keys.g.dart';
 
 class EmptyStateView extends StatelessWidget {
   const EmptyStateView({super.key, this.message});
@@ -18,7 +20,7 @@ class EmptyStateView extends StatelessWidget {
                 color: Theme.of(context).colorScheme.primary,
               )),
           Text(
-            message ?? "No data available",
+            message ?? LocaleKeys.NoDataAvailable.tr(),
             style: const TextStyle(
               fontSize: 20,
               color: Colors.grey,

@@ -8,6 +8,8 @@ import 'package:how_to_cook/managers/products_cart/products_cart_manager.dart';
 import 'package:how_to_cook/managers/products_cart/products_cart_manager_impl.dart';
 import 'package:how_to_cook/managers/saved_meals/saved_meals_manager.dart';
 import 'package:how_to_cook/managers/saved_meals/saved_meals_manager_impl.dart';
+import 'package:how_to_cook/managers/translation/translation_manager.dart';
+import 'package:how_to_cook/managers/translation/translation_manager_impl.dart';
 import 'package:how_to_cook/services/local_db/local_db_service.dart';
 import 'package:how_to_cook/services/local_db/local_db_service_impl.dart';
 import 'package:how_to_cook/services/meal_db/meal_db_service.dart';
@@ -37,6 +39,7 @@ class CompositionRoot {
     injector.registerDependency<HistoryManager>(() => HistoryManagerImpl());
     injector.registerDependency<ProductsCartManager>(() => ProductsCartManagerImpl());
     injector.registerDependency<SavedMealsManager>(() => SavedMealsManagerImpl());
+    injector.registerDependency<TranslationManager>(() => TranslationManagerImpl());
   }
 
   static void registerProviders() {}

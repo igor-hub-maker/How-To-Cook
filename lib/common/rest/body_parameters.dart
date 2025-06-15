@@ -24,4 +24,7 @@ mixin BodyParameters {
   static const String strType = 'strType';
   static const String count = 'count';
   static const String isMarked = 'isMarked';
+  static const String text = 'text';
+  static const String targetLanguage = 'target_lang';
+  static const String translations = 'translations';
 }

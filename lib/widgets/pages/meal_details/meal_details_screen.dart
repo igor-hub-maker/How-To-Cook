@@ -1,9 +1,11 @@
 import 'dart:developer';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:how_to_cook/common/app_colors.dart';
 import 'package:how_to_cook/extensions/context_extension.dart';
+import 'package:how_to_cook/generated/locale_keys.g.dart';
 import 'package:how_to_cook/models/meal.dart';
 import 'package:how_to_cook/models/meal_short.dart';
 import 'package:how_to_cook/widgets/pages/meal_details/meal_details_cubit.dart';
@@ -204,7 +206,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> with TickerProvid
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "${state.meal!.ingredients.length} Products",
+                            LocaleKeys.Ingredients.plural(state.meal!.ingredients.length),
                             style: const TextStyle(
                               fontFamily: Fonts.Comfortaa,
                               fontSize: 18,
@@ -213,7 +215,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> with TickerProvid
                           ),
                           TextButton.icon(
                             onPressed: screenCubit.addProductsToCart,
-                            label: Text("Add to cart"),
+                            label: Text(LocaleKeys.AddedToCart.tr()),
                             icon: const Icon(Icons.add_shopping_cart_rounded),
                             iconAlignment: IconAlignment.end,
                           ),
@@ -267,7 +269,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> with TickerProvid
                           onPressed: () {
                             launchUrl(Uri.parse(state.meal!.youtubeUrl!));
                           },
-                          label: const Text("Watch video"),
+                          label: Text(LocaleKeys.WatchVideo.tr()),
                           icon: const Icon(Icons.play_arrow),
                         ),
                         const SizedBox(height: 16),

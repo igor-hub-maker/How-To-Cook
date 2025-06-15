@@ -5,4 +5,5 @@ class ApiConstants {
   static const String list = "list.php";
   static const String filter = "filter.php";
   static const String lookup = "lookup.php";
+  static const String translate = "/v2/translate";
 }
