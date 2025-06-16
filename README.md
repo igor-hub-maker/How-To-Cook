@@ -11,5 +11,6 @@
 * Bloc - Cubit
 * DeepL Translate
 * api: [Meal DB](https://www.themealdb.com)
+* lotti animations
 ## Опублікований продукт
 Інсталяційний пакет створеної гри можна завантажити з магазину [apkpure.com](https://apkpure.com/p/com.example.how_to_cook)
