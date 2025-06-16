@@ -9,7 +9,7 @@
 * Dart
 * Flutter
 * Bloc - Cubit
-* Google Translate
+* DeepL Translate
 * api: [Meal DB](https://www.themealdb.com)
 ## Опублікований продукт
 Інсталяційний пакет створеної гри можна завантажити з магазину [apkpure.com](https://apkpure.com/p/com.example.how_to_cook)
