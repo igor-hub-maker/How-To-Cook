@@ -40,7 +40,7 @@ flutter:
     - assets/translations/
     - assets/animations/
     - assets/images/
-    - assets/config.json
+    # - assets/config.json
 
 fonts:
     - family: Comfortaa

@@ -25,9 +25,14 @@ Future<void> main() async {
 
   runApp(
     EasyLocalization(
-      supportedLocales: const [Locale('en'), Locale('de'), Locale('uk')],
+      supportedLocales: const [
+        Locale('en'),
+        // Locale('de'),
+        // Locale('uk')
+      ],
       path: 'assets/translations',
       fallbackLocale: const Locale('en'),
+      startLocale: const Locale('en'),
       child: const MainApp(),
     ),
   );
@@ -63,7 +68,8 @@ class MainApp extends StatelessWidget {
 }
 
 Future<void> loadConfig() async {
-  final jsonString = await rootBundle.loadString(Constants.configPath);
-  final json = jsonDecode(jsonString);
-  EnvironmentConstants.DeepLKey = json['DeepLKey'] ?? '';
+  // Removed while not needed
+  // final jsonString = await rootBundle.loadString(Constants.configPath);
+  // final json = jsonDecode(jsonString);
+  // EnvironmentConstants.DeepLKey = json['DeepLKey'] ?? '';
 }

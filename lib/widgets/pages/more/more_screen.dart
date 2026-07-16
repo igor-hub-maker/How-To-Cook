@@ -78,38 +78,47 @@ class _MoreScreenState extends State<MoreScreen> {
                   ),
                 ),
                 const SizedBox(height: 26),
-                InkWell(
-                  onTap: changeLocale,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                    decoration: BoxDecoration(
-                      color: Colors.transparent,
-                      border: Border.symmetric(
-                        horizontal: BorderSide(
-                          color: AppColors.colorScheme.primary,
-                        ),
-                      ),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          LocaleKeys.ChangeLanguage.tr(),
-                          style: TextStyle(
-                            fontFamily: Fonts.Comfortaa,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.colorScheme.primary,
-                          ),
-                        ),
-                        Icon(
-                          Icons.arrow_forward_ios_rounded,
-                          color: AppColors.colorScheme.primary,
-                        ),
-                      ],
-                    ),
+                const Text(
+                  "How to cook",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: Fonts.Comfortaa,
+                    fontSize: 32,
+                    fontWeight: FontWeight.w700,
                   ),
                 ),
+                // InkWell(
+                //   onTap: changeLocale,
+                //   child: Container(
+                //     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                //     decoration: BoxDecoration(
+                //       color: Colors.transparent,
+                //       border: Border.symmetric(
+                //         horizontal: BorderSide(
+                //           color: AppColors.colorScheme.primary,
+                //         ),
+                //       ),
+                //     ),
+                //     child: Row(
+                //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //       children: [
+                //         Text(
+                //           LocaleKeys.ChangeLanguage.tr(),
+                //           style: TextStyle(
+                //             fontFamily: Fonts.Comfortaa,
+                //             fontSize: 16,
+                //             fontWeight: FontWeight.w700,
+                //             color: AppColors.colorScheme.primary,
+                //           ),
+                //         ),
+                //         Icon(
+                //           Icons.arrow_forward_ios_rounded,
+                //           color: AppColors.colorScheme.primary,
+                //         ),
+                //       ],
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           ),

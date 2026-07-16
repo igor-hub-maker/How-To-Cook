@@ -11,48 +11,51 @@ import 'package:how_to_cook/managers/translation/translation_manager.dart';
 import 'package:http/http.dart' as http;
 
 class TranslationManagerImpl implements TranslationManager {
+  // translation not needed anymore, so for now it will just return original text
   @override
   Future<String> translate(String text, String targetLanguage) async {
-    final result = await _sendTranslationRequest([text], targetLanguage);
-    return result.isNotEmpty ? result.first : '';
+    return text;
+    // final result = await _sendTranslationRequest([text], targetLanguage);
+    // return result.isNotEmpty ? result.first : '';
   }
 
   @override
-  Future<List<String>> translateMany(List<String> text, String targetLanguage) {
-    return _sendTranslationRequest(text, targetLanguage);
+  Future<List<String>> translateMany(List<String> text, String targetLanguage) async {
+    return text;
+    // return _sendTranslationRequest(text, targetLanguage);
   }
 
-  Future<List<String>> _sendTranslationRequest(List<String> text, String targetLanguage) async {
-    final response = await http.post(
-      Uri.https(EnvironmentConstants.deepLUrl, ApiConstants.translate),
-      headers: {
-        HeadersConstants.contentType: Formats.headerJson,
-        HeadersConstants.authorization: 'DeepL-Auth-Key ${EnvironmentConstants.DeepLKey}',
-      },
-      body: jsonEncode(
-        {
-          BodyParameters.text: text,
-          BodyParameters.targetLanguage: targetLanguage,
-        },
-      ),
-    );
+  // Future<List<String>> _sendTranslationRequest(List<String> text, String targetLanguage) async {
+  //   final response = await http.post(
+  //     Uri.https(EnvironmentConstants.deepLUrl, ApiConstants.translate),
+  //     headers: {
+  //       HeadersConstants.contentType: Formats.headerJson,
+  //       HeadersConstants.authorization: 'DeepL-Auth-Key ${EnvironmentConstants.DeepLKey}',
+  //     },
+  //     body: jsonEncode(
+  //       {
+  //         BodyParameters.text: text,
+  //         BodyParameters.targetLanguage: targetLanguage,
+  //       },
+  //     ),
+  //   );
 
-    if (response.statusCode != 200) {
-      Fluttertoast.showToast(
-        msg: 'Failed to translate text: ${response.statusCode} ${response.reasonPhrase}',
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.BOTTOM,
-      );
+  //   if (response.statusCode != 200) {
+  //     Fluttertoast.showToast(
+  //       msg: 'Failed to translate text: ${response.statusCode} ${response.reasonPhrase}',
+  //       toastLength: Toast.LENGTH_LONG,
+  //       gravity: ToastGravity.BOTTOM,
+  //     );
 
-      log('Failed to translate text: ${response.statusCode} ${response.reasonPhrase}, ${response.body}');
-      return [];
-    }
+  //     log('Failed to translate text: ${response.statusCode} ${response.reasonPhrase}, ${response.body}');
+  //     return [];
+  //   }
 
-    final decodedBody = utf8.decode(response.bodyBytes);
-    final json = List.from(jsonDecode(decodedBody)[BodyParameters.translations]);
+  //   final decodedBody = utf8.decode(response.bodyBytes);
+  //   final json = List.from(jsonDecode(decodedBody)[BodyParameters.translations]);
 
-    final result = json.map((e) => e[BodyParameters.text] as String).toList();
+  //   final result = json.map((e) => e[BodyParameters.text] as String).toList();
 
-    return result;
-  }
+  //   return result;
+  // }
 }
